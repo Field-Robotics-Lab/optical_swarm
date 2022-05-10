@@ -20,7 +20,8 @@ git clone git@github.com:osrf/vorc.git
 vrx
 git clone git@github.com:osrf/vrx.git
 
-#############################################################################################################################
+###########################################################################################
+
 this spawns the vorc model with lidar and camera, rabbit node with buoy visual, and aprilcube robots from tams_apriltags
 in a separate terminal window
 
