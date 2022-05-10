@@ -20,12 +20,12 @@ git clone git@github.com:osrf/vorc.git
 vrx
 git clone git@github.com:osrf/vrx.git
 
-# this spawns the vorc model with lidar and camera, rabbit node with buoy visual, and aprilcube robots from tams_apriltags
-# in a separate terminal window
+this spawns the vorc model with lidar and camera, rabbit node with buoy visual, and aprilcube robots from tams_apriltags
+in a separate terminal window
 
 $ roslaunch optical_swarm trial.launch
 
-# this spawns rviz with both lidar and camera displayed. 
+this spawns rviz with both lidar and camera displayed. 
 
 $ roslaunch optical_swarm rviz_cora1.launch
 
