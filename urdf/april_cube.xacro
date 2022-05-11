@@ -16,7 +16,7 @@
   -->
 
   <xacro:include filename="$(find tams_apriltags)/urdf/utilities.xacro" />
-  <xacro:include filename="$(find tams_apriltags)/urdf/apriltag_marker.xacro" />
+  <xacro:include filename="$(find optical_swarm)/urdf/apriltag_marker.xacro" />
 
 
   <xacro:macro name="april_cube" params="name size marker_size id_top id_front id_right id_back id_left id_bottom" >
