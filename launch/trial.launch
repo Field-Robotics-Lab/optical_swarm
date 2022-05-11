@@ -83,7 +83,7 @@
   <!-- Rabbit Visualization:
        Spawn a visual model to serve as marker -->
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-x 20 -y -372 -z 0 -file $(find mrc_examples)/urdf/rabbit.urdf
+        args="-x 20 -y -372 -z 0 -file $(find optical_swarm)/urdf/rabbit.urdf
               -urdf -model rabbit"/>
 
  
