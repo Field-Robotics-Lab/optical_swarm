@@ -83,7 +83,7 @@
   <!-- Rabbit Visualization:
        Spawn a visual model to serve as marker -->
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-x 20 -y -372 -z 0 -file $(find optical_swarm)/urdf/rabbit.urdf
+        args="-x 20 -y -372 -z 2 -file $(find optical_swarm)/urdf/rabbit.urdf
               -urdf -model rabbit"/>
 
  
@@ -97,7 +97,7 @@
   <node pkg="mrc_examples" type="rabbit.py" name="rabbit">
     <param name="update_rate" type="double" value="10"/>
     <param name="velocity" type="double" value="5"/>
-    <rosparam file="$(find mrc_examples)/config/rabbit_waypoints_marina.yaml" />
+    <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_marina.yaml" />
   </node>  
   
 
@@ -110,11 +110,11 @@
   
     <!-- upload the robot xacro/urdf to the param server -->
   <param name="robot_description" 
-         command="$(find xacro)/xacro --inorder $(find tams_apriltags)/urdf/april_cube_demo.xacro" />
+         command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
 
 
   
-  <!-- spawn the robot at xzy=(-1,0,0) -->
+  <!-- spawn the robot at xzy=(20 -372 2) -->
   <node name="spawn_april_cube_demo" pkg="gazebo_ros" type="spawn_model" 
         args="-urdf -param robot_description -x 20 -y -372 -z 2 -R 0 -P 0 -Y 0 -model april_cube" 
         respawn="false" output="screen" />
