@@ -1,0 +1,17 @@
+repositories:
+  optical_swarm:
+    type: git
+    url: git@github.com:Field-Robotics-Lab/optical_swarm.git
+    version: main
+  sandwichboat:
+    type: git
+    url: git@github.com:Field-Robotics-Lab/sandwichboat.git
+    version: main
+  vorc:
+    type: git
+    url: git@github.com:osrf/vorc.git
+    version: master
+  vrx:
+    type: git
+    url: git@github.com:osrf/vrx.git
+    version: master
