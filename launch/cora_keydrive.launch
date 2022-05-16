@@ -2,7 +2,7 @@
 <launch>
   <arg name="max_angle" default="$(eval pi/2)"/>
   <arg name="thrust_config" default="H"/>
-  <arg name="namespace" default="cora"/>
+  <arg name="namespace" default="cora1/cora"/>
 
   <!-- Keyboard teleop -->
   <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen">
