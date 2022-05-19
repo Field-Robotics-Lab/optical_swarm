@@ -22,7 +22,7 @@
     <origin xyz="0 0 1" rpy="0 0 0" />
   </joint>
 
-  <xacro:april_cube name="april_cube_60" size="2.1" marker_size="2"
+  <xacro:april_cube name="april_cube_60" size="1.1" marker_size="1"
       id_top="60" id_front="61" id_right="62" id_back="63" id_left="64" id_bottom="65" />
 
   <joint name="april_cube_60_joint" type="fixed" >

@@ -1,0 +1,20 @@
+<robot name="rabbit">
+  <link name="rabbit_sandwich">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="1.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find sandwich_description)/models/sandwich_base/sandwich.dae" scale="10 10 10"/>
+      </geometry>
+    </visual>
+  </link>
+  <gazebo reference="rabbit_sandwich">
+    <turnGravityOff>1</turnGravityOff>
+  </gazebo>
+  <gazebo>
+    <!--<static>true</static>-->
+  </gazebo>
+</robot>

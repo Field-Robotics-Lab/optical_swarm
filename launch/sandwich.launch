@@ -44,7 +44,10 @@
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_0"/>
       <arg name="robot_name" value="sandwich_0"/>
-    </include>
+     </include>
+     <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher">      
+    </node>
   </group>
   <group ns="robot1">
     <include file="$(find sandwich_gazebo)/launch/sandwich_multi.launch">
@@ -58,6 +61,9 @@
       <arg name="namespace" value="sandwich_1"/>
       <arg name="robot_name" value="sandwich_1"/>
     </include>
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher">      
+    </node>
   </group>
   
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
@@ -79,6 +85,43 @@
     <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
   </node>  
   
+  
+  <group>
+  <!-- simple demo of apriltag_marker objects in rviz and Gazebo.
+  -->
+
+  
+    <!-- upload the robot xacro/urdf to the param server -->
+  <param name="robot_description" 
+         command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
+
+
+  
+  <!-- spawn the robot at xzy=(-530 185 2) -->
+  <node name="spawn_april_cube_demo" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -param robot_description -x -530 -y 185 -z 2 -R 0 -P 0 -Y 0 -model april_cube" 
+        respawn="false" output="screen" />
+
+
+  <!-- publish world transform to tf -->
+  <node pkg="tf" type="static_transform_publisher" 
+        name="static_map_tf_publisher" args="0 0 0 0 0 0 world map 100" />
+
+
+ <!-- publishes robot-state, reading the urdf robot model from "doro_description",
+       subscribing to /joint_states and publishing to /tf -->
+  <node pkg="robot_state_publisher" type="state_publisher" respawn="false"
+        name="robot_state_publisher">
+     <param name="publish_frequency" type="double" value="100.0" />
+     <param name="tf_prefix" type="string" value="" />
+ </node>
+
+
+  </group>
+  
+  <!-- Start RVIZ with config file -->
+  <node type="rviz" name="rviz" pkg="rviz"
+	args="-d $(find optical_swarm)/config/sandwich.rviz" />
               
 </launch>
 
