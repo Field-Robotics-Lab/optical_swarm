@@ -19,10 +19,6 @@ repositories:
     type: git
     url: git@github.com:bsb808/geonav_transform.git
     version: master
-  mrc_examples:
-    type: git
-    url: git@github.com:MultiRobotControl/mrc_examples.git
-    version: main
   usv_control:
     type: git
     url: git@github.com:bsb808/usv_control.git
