@@ -18,11 +18,11 @@
   <arg name="joy" default="true"/>
   
   <!-- Joystick control -->
-  <group if="$(arg joy)">
+  <!--group if="$(arg joy)">
     <include file="$(find vrx_gazebo)/launch/usv_joydrive.launch">
       <arg name="namespace" value="$(arg namespace)"/>
     </include>
-  </group>
+  </group-->
 
   <!-- Start Gazebo with the world file -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -73,13 +73,13 @@
               
               
               <!-- Convert PointStamped messages to model states -->
-  <node name="pointstamped2modelstate" pkg="mrc_examples"
+  <node name="pointstamped2modelstate" pkg="optical_swarm"
 	type="pointstamped2modelstate.py" output="screen">
     <param name="model_name" value="rabbit"/>
     <param name="reference_frame" value="world"/>
   </node>
   
-  <node pkg="mrc_examples" type="rabbit.py" name="rabbit">
+  <node pkg="optical_swarm" type="rabbit.py" name="rabbit">
     <param name="update_rate" type="double" value="10"/>
     <param name="velocity" type="double" value="5"/>
     <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
