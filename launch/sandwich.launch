@@ -48,12 +48,12 @@
      <node pkg="robot_state_publisher" type="robot_state_publisher"
 	  name="robot_state_publisher">      
     </node>
-    <node pkg="image_proc" type="image_proc" name="image_proc"
+    <!--node pkg="image_proc" type="image_proc" name="image_proc"
        ns="$(arg robot_name)/sensors/cameras/front_right_camera" >
      </node> 
      <node pkg="image_proc" type="image_proc" name="image_proc"
        ns="$(arg robot_name)/sensors/cameras/front_left_camera" >
-     </node> 
+     </node--> 
   </group>
 
   <group ns="robot1">
@@ -71,12 +71,15 @@
     <node pkg="robot_state_publisher" type="robot_state_publisher"
 	  name="robot_state_publisher">
     </node>
-    <node pkg="image_proc" type="image_proc" name="image_proc"
-       ns="$(arg robot_name)/sensors/cameras/front_right_camera" >
+    <!--node pkg="image_proc" type="image_proc" name="image_proc"
+       ns="sandwich_1/sensors/cameras/front_right_camera" >
      </node> 
      <node pkg="image_proc" type="image_proc" name="image_proc"
-       ns="$(arg robot_name)/sensors/cameras/front_left_camera" >
-     </node> 
+       ns="sandwich_1/sensors/cameras/front_left_camera" >
+     </node--> 
+     <!--include file="$(find optical_swarm)/launch/continuous_detection.launch">
+    <arg name="camera_name"   value="$(arg robot_name)/sensors/cameras/front_left_camera"/>
+  </include-->
   </group>
   
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
@@ -115,7 +118,12 @@
         args="-urdf -param robot_description -x -530 -y 185 -z 2 -R 0 -P 0 -Y 0 -model april_cube" 
         respawn="false" output="screen" />
 
-
+<!-- Start apriltag continuous detection -->
+  
+  
+  
+  
+  
   <!-- publish world transform to tf -->
   <!--node pkg="tf" type="static_transform_publisher" 
         name="static_map_tf_publisher" args="0 0 0 0 0 0 world map 100" /-->
