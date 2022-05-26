@@ -48,7 +48,14 @@
      <node pkg="robot_state_publisher" type="robot_state_publisher"
 	  name="robot_state_publisher">      
     </node>
+    <node pkg="image_proc" type="image_proc" name="image_proc"
+       ns="$(arg robot_name)/sensors/cameras/front_right_camera" >
+     </node> 
+     <node pkg="image_proc" type="image_proc" name="image_proc"
+       ns="$(arg robot_name)/sensors/cameras/front_left_camera" >
+     </node> 
   </group>
+
   <group ns="robot1">
     <include file="$(find sandwich_gazebo)/launch/sandwich_multi.launch">
       <arg name="x" value="-532"/>
@@ -62,8 +69,14 @@
       <arg name="robot_name" value="sandwich_1"/>
     </include>
     <node pkg="robot_state_publisher" type="robot_state_publisher"
-	  name="robot_state_publisher">      
+	  name="robot_state_publisher">
     </node>
+    <node pkg="image_proc" type="image_proc" name="image_proc"
+       ns="$(arg robot_name)/sensors/cameras/front_right_camera" >
+     </node> 
+     <node pkg="image_proc" type="image_proc" name="image_proc"
+       ns="$(arg robot_name)/sensors/cameras/front_left_camera" >
+     </node> 
   </group>
   
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
