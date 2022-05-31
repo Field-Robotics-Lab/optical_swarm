@@ -1,7 +1,7 @@
 <launch>
   <arg name="launch_prefix" default="" /> <!-- set to value="gdbserver localhost:10000" for remote debugging -->
   <arg name="node_namespace" default="apriltag_ros_continuous_node" />
-  <arg name="camera_name" default="/robot1/sandwich_1/sensors/cameras/front_right_camera" />
+  <arg name="camera_name" default="/robot0/sandwich_0/sensors/cameras/front_right_camera" />
   <arg name="image_topic" default="image_rect" />
 
   <!-- Set parameters -->
