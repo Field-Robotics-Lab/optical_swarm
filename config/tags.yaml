@@ -16,18 +16,12 @@
 #
 # standalone_tags:
 #   [
-#     {id: 60, size: 1, name: april_cube_60},
+#     {id: ID, size: SIZE, name: NAME},
 #     ...
 #   ]
 standalone_tags:
-  [
-     {id: 60, size: 1, name: april_cube_60},
-     {id: 61, size: 1, name: april_cube_60},
-     {id: 62, size: 1, name: april_cube_60},
-     {id: 63, size: 1, name: april_cube_60},
-     {id: 64, size: 1, name: april_cube_60},
-     {id: 65, size: 1, name: april_cube_60},
-  ]
+    [
+    ]
 # ## Tag bundle definitions
 # ### Remarks
 #

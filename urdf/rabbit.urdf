@@ -22,10 +22,4 @@
 
 
 
-<!--<visual>  # <geometry>  #  <box size="1 1 1"/> #  </geometry>  # </visual> -->
 
-<!--    <visual>
-      <geometry>
-        <mesh filename="package://tams_apriltags/meshes/tag${str(family).replace( 'h', '_' )}_${str(ID).zfill(5)}.dae" scale="${10*size} ${10*size} 1"/>
-      </geometry>
-    </visual> -->

@@ -20,6 +20,8 @@
 
 
   <xacro:macro name="april_cube" params="name size marker_size id_top id_front id_right id_back id_left id_bottom" >
+    
+
     <link name="${name}">
       <inertial>
         <!-- center of mass near the bottom for stability -->
@@ -28,7 +30,7 @@
         <inertia  ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
       </inertial>
       <visual>
-        <material name="white" /> 
+        <material name="White" /> 
         <origin xyz="0 0 0" />
         <geometry>
           <box size="${size} ${size} ${size}" />
@@ -50,9 +52,9 @@
       <mu2>100.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
-    </gazebo>
+  </gazebo>
 
-    <!-- top -->
+  <!-- top -->
     <xacro:apriltag_marker namespace="" name="${name}_tag_${id_top}" parent="${name}"  
            family="36h11" ID="${id_top}" size="${marker_size}">
            <origin xyz="0 0 ${size/2+0.001}" rpy="0 0 0" />

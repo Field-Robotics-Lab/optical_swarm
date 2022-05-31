@@ -1,0 +1,26 @@
+<launch>
+  <node pkg="apriltags_ros" type="apriltag_ros_continuous_node" name="apriltag_ros_continuous_node" output="screen">
+    <!-- Remap topic required by the node to custom topics -->
+    <remap from="image_rect" to="robot1/sandwich1/sensors/cameras/front_right_camera/image_rect" />
+    <remap from="camera_info" to="robot1/sandwich1/sensors/cameras/front_right_camera/camera_info" />
+
+    
+
+    <!-- Select the tag family: 16h5, 25h7, 25h9, 36h9, or 36h11(default) -->
+    <param name="tag_family" type="str" value="36h11" />
+
+    <!-- Enable projected optical measurements for more accurate tag transformations -->
+    <!-- This exists for backwards compatability and should be left true for new setups -->
+    <param name="projected_optics" type="bool" value="true" />
+
+    <!-- Describe the tags -->
+    <rosparam param="tag_descriptions">[
+      {id: 60, size: 1, frame_id: april_tag_frame_id_60},
+      {id: 61, size: 1, frame_id: april_tag_frame_id_61},
+      {id: 62, size: 1, frame_id: april_tag_frame_id_62},
+      {id: 63, size: 1, frame_id: april_tag_frame_id_63},
+      {id: 64, size: 1, frame_id: april_tag_frame_id_64},
+      {id: 65, size: 1, frame_id: april_tag_frame_id_65}]
+    </rosparam>
+  </node>
+</launch>

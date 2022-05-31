@@ -77,25 +77,24 @@
      <node pkg="image_proc" type="image_proc" name="image_proc"
        ns="sandwich_1/sensors/cameras/front_left_camera" >
      </node--> 
-     <!--include file="$(find optical_swarm)/launch/continuous_detection.launch">
-    <arg name="camera_name"   value="$(arg robot_name)/sensors/cameras/front_left_camera"/>
-  </include-->
+     
   </group>
   
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
+  <param name="robot_description" 
+         command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
+         
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-x -532 -y 182 -z 1 -file $(find optical_swarm)/urdf/rabbit.urdf
-              -urdf -model rabbit"/>
-              
+        args="-urdf -param robot_description -x -532 -y 182 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
               
               <!-- Convert PointStamped messages to model states -->
   <node name="pointstamped2modelstate" pkg="optical_swarm"
 	type="pointstamped2modelstate.py" output="screen">
-    <param name="model_name" value="rabbit"/>
+    <param name="model_name" value="april_cube"/>
     <param name="reference_frame" value="world"/>
   </node>
   
-  <node pkg="optical_swarm" type="rabbit.py" name="rabbit">
+  <node pkg="optical_swarm" type="rabbit.py" name="april_cube">
     <param name="update_rate" type="double" value="10"/>
     <param name="velocity" type="double" value="5"/>
     <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
@@ -107,19 +106,23 @@
   -->
 
   
-    <!-- upload the robot xacro/urdf to the param server -->
-  <param name="robot_description" 
-         command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
+    <!-- upload the robot xacro/urdf to the param server
+    
+    Note: ADD EXTRA DASH IN FRONT OF inorder BELOW -->
+  <!--param name="robot_description" 
+         command="$(find xacro)/xacro -inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" /-->
 
 
   
-  <!-- spawn the robot at xzy=(-530 185 2) -->
-  <node name="spawn_april_cube_demo" pkg="gazebo_ros" type="spawn_model" 
-        args="-urdf -param robot_description -x -530 -y 185 -z 2 -R 0 -P 0 -Y 0 -model april_cube" 
-        respawn="false" output="screen" />
+  <!-- spawn the robot at xzy=(-532 182 1) -->
+  <!--node name="spawn_april_cube_demo" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -param robot_description -x -532 -y 182 -z 1 -R 0 -P 0 -Y 0 -model april_cube" 
+        respawn="false" output="screen" /-->
 
 <!-- Start apriltag continuous detection -->
-  
+  <!--include file="$(find optical_swarm)/launch/continuous_detection.launch">
+    <arg name="camera_name"   value="$(arg robot_name)/sensors/cameras/front_left_camera"/>
+  </include-->
   
   
   
