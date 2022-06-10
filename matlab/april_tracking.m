@@ -30,9 +30,10 @@ while true
 tag = receive(tag_tf);
 trans = tag.Transforms.Transform.Translation;
 rot = tag.Transforms.Transform.Rotation;
-[left,right] = aprilTag_thrustcmd(trans);
-left_msg.Data = left
-right_msg.Data = right
+
+[left,right] = aprilTag_thrustcmd(trans,rot);
+ left_msg.Data = left;
+ right_msg.Data = right;
 send(left_pub, left_msg);
 send(right_pub, right_msg);
 
