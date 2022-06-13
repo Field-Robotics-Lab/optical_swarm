@@ -1,4 +1,4 @@
-function [left,right] = aprilTag_thrustcmd(trans,rot)
+function [left,right] = aprilTag_xform(trans,rot)
 % aprilTag2cmd_vel receives tf translation data from the apriltag_ros
 % wrapper and calculates left and right thrust commands
 

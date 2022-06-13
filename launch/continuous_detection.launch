@@ -21,5 +21,6 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
 
     <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
+    <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </launch>

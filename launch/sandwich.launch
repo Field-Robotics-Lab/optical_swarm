@@ -70,9 +70,10 @@
   <group ns="april_cube">     
   <param name="april_description" 
          command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
-         
+     
+        
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param april_description -x -500 -y 200 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
+        args="-urdf -param april_description -x -500 -y 210 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
               
               <!-- Convert PointStamped messages to model states -->
   <node name="pointstamped2modelstate" pkg="optical_swarm"
@@ -93,6 +94,7 @@
     </node>
   </group>
   
+        
   <!-- Start RVIZ with config file -->
   <!--node type="rviz" name="rviz" pkg="rviz"
 	args="-d $(find optical_swarm)/config/sandwich.rviz" /-->
