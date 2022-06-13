@@ -36,9 +36,9 @@ else
 tags{i} = frames{tag_index(i)};
    end
 for j=1:numel(tags)
-    tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf)
+    tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
 end
-
+[tagID,dist,head] = aprilTag_xform(tag_tf)
 
 end
 % tf1 = frames(index(1))
