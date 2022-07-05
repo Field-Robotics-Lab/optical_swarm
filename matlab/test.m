@@ -32,12 +32,13 @@ tag_index = find(not(cellfun('isempty',strfind(frames,'april_tag'))));
 if isempty(tag_index) == 1
     tags = {};
 else
+    clear tag_tf
    for i=1:numel(tag_index)
-tags{i} = frames{tag_index(i)};
+        tags{i} = frames{tag_index(i)};
    end
-for j=1:numel(tags)
-    tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
-end
+    for j=1:numel(tags)
+         tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
+    end
 [tagID,dist,head] = aprilTag_xform(tag_tf)
 
 end
