@@ -40,8 +40,8 @@ else
     for j=1:numel(tags)
          tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
     end
-[tagID,dist,head] = aprilTag_xform(tag_tf);
-[left,right] = aprilTag_thrustcmd(dist,head)
+[tagID,dist,head] = aprilTag_xform(tag_tf)
+[left,right] = aprilTag_thrustcmd(dist,head);
  left_msg.Data = left;
  right_msg.Data = right;
 send(left_pub, left_msg);
