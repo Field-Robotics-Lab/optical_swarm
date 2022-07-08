@@ -17,11 +17,12 @@ rate = rateControl(desiredRate);
 
 
 % Setup Publisher
-
-% left_pub = rospublisher('/sandwich_0/thrusters/left_thrust_cmd','std_msgs/Float32');
-% right_pub = rospublisher('/sandwich_0/thrusters/right_thrust_cmd','std_msgs/Float32');
-% left_msg = rosmessage(left_pub);
-% right_msg = rosmessage(right_pub);
+cmd_pub = rospublisher('/robot0/sandwich_0/cmd_vel','geometry_msgs/Twist');
+cmd_msg = rosmessage(cmd_pub);
+left_pub = rospublisher('/sandwich_0/thrusters/left_thrust_cmd','std_msgs/Float32');
+right_pub = rospublisher('/sandwich_0/thrusters/right_thrust_cmd','std_msgs/Float32');
+left_msg = rosmessage(left_pub);
+right_msg = rosmessage(right_pub);
 
 %%
 
@@ -40,18 +41,13 @@ else
          tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
     end
 [tagID,dist,head] = aprilTag_xform(tag_tf);
-[v_c,r_c] = aprilTag2cmd_vel(dist,head)
+[left,right] = aprilTag_thrustcmd(dist,head)
+ left_msg.Data = left;
+ right_msg.Data = right;
+send(left_pub, left_msg);
+send(right_pub, right_msg);
 end
-% tf1 = frames(index(1))
-% tf1 = frames{index(1)}
-% 
-% tf_1 = getTransform(tftree,'sandwich_0/base_link',tf1,'Timeout',inf)
-% tf_1.Transform.Translation
-% 
-% tf4 = getTransform(tftree,'sandwich_0/base_link','tag_4','Timeout',inf)
-% tf1 = getTransform(tftree,'sandwich_0/base_link','tag_1','Timeout',inf)
-% trans = tf1.Transform.Translation;
-% rot = tf1.Transform.Rotation;
+
 
 
 waitfor(rate);

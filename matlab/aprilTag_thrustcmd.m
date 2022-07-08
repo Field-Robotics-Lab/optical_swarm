@@ -1,11 +1,11 @@
-function [left,right] = aprilTag_thrustcmd(trans,rot)
+function [left,right] = aprilTag_thrustcmd(dist,head)
 % aprilTag2cmd_vel receives tf translation data from the apriltag_ros
 % wrapper and calculates left and right thrust commands
 
 % Position
-X = trans.X;
-Y = trans.Y;
-Z = trans.Z;
+% X = trans.X;
+% Y = trans.Y;
+% Z = trans.Z;
 
 % Quaternions
 % w = rot.W;
@@ -14,10 +14,10 @@ Z = trans.Z;
 % z = rot.Z;
 
 
-dist = norm([X Y])
+dist = mean(dist);
 % angle = quat2eul([w x y z]);
 % head = rad2deg(angle(1))
-psi=atan2d(Y,X)
+psi=mean(head);
 
 % Linear and Angular gains and command velocities
 % k_v=0.1;
