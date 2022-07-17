@@ -28,7 +28,7 @@
   </include>
 
  <group ns="robot0">
-    <include file="$(find sandwich_gazebo)/launch/sandwich_multi.launch">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
       <arg name="x" value="-532"/>
       <arg name="y" value="162"/>
       <arg name="z" value="0"/>
@@ -43,44 +43,15 @@
 	  name="robot_state_publisher" > 
 	  <remap from="robot_description" to="/robot0/sandwich_0/robot_description" />     
      </node>
-     
-     <node ns="$(arg namespace)/sensors" pkg="optical_swarm" type="p3d2nav.py" name="p3d2nav">
-      <!-- The lat/lon location of the gazebo origin -->  
-      <param name="gazebo_origin_lat" value="44.0952" type="double" />
-      <param name="gazebo_origin_long" value="9.8234" type="double" />
-      <remap from="p3d_odom" to="p3d"/>
-      <remap from="nav_odom" to="p3d_nav/"/>
-    </node>
-     
-     <node ns="$(arg namespace)" pkg="usv_control" type="usv_control_diff_drive.py"
-  name="sandwich_0_usv_control_diff_drive" output="screen">
-    <!-- Set initial control gains -->
-    <!-- Surge -->
-    <param name="velKp" value="1.1"/>
-    <param name="velKi" value="0.0"/>
-    <param name="velKd" value="0.0"/>
-    <!-- Yaw Rate -->
-    <param name="yawKp" value="2.5"/>
-    <param name="yawKi" value="1.0"/>
-    <param name="yawKd" value="0.0"/>
-
-    <!-- Use remap to connect generic controller to specific use-case -->
-    <remap from="nav_odom" to="sensors/p3d_nav"/>
-    <remap from="left_thrust_cmd" to="thrusters/left_thrust_cmd"/>
-    <remap from="right_thrust_cmd" to="thrusters/right_thrust_cmd"/>
-    <remap from="vel_pid_debug" to="control/vel_pid_debug"/>
-    <remap from="yaw_pid_debug" to="control/yaw_pid_debug"/>
-    </node>
-     
-     
+         
   </group>
 
 
 
   <group ns="robot1">
     <include file="$(find sandwich_gazebo)/launch/sandwich_multi.launch">
-      <arg name="x" value="-532"/>
-      <arg name="y" value="172"/>
+      <arg name="x" value="-542"/>
+      <arg name="y" value="165"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
@@ -114,7 +85,7 @@
   
   <node pkg="optical_swarm" type="rabbit.py" name="april_cube">
     <param name="update_rate" type="double" value="10"/>
-    <param name="velocity" type="double" value="2"/>
+    <param name="velocity" type="double" value="3"/>
     <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
     
   </node>  
