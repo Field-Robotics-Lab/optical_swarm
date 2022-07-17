@@ -27,11 +27,11 @@ standalone_tags:
       {id: 3, size: 1.0, name: april_tag_3},
       {id: 4, size: 1.0, name: april_tag_4},
       {id: 5, size: 1.0, name: april_tag_5},
-      {id: 10, size: 0.5, name: boat_tag_0},
-      {id: 11, size: 0.5, name: boat_tag_1},
-      {id: 12, size: 0.5, name: boat_tag_2},
-      {id: 13, size: 0.5, name: boat_tag_3},
-      {id: 14, size: 0.5, name: boat_tag_4}
+      {id: 10, size: 1.0, name: boat_tag_0},
+      {id: 11, size: 1.0, name: boat_tag_1},
+      {id: 12, size: 1.0, name: boat_tag_2},
+      {id: 13, size: 1.0, name: boat_tag_3},
+      {id: 14, size: 1.0, name: boat_tag_4}
     ]
 # ## Tag bundle definitions
 # ### Remarks

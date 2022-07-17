@@ -93,28 +93,28 @@
 	
 	<!-- front -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_0" parent="/base_link"
-           family="36h11" ID="10" size="0.625">
-           <origin xyz="0 0 1.5" rpy="1.571 0 1.571" />
+           family="36h11" ID="10" size="1.25">
+           <origin xyz="0 0 2" rpy="1.571 0 1.571" />
     </xacro:apriltag_marker>
      
     <!-- back -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_1" parent="/base_link"
-           family="36h11" ID="11" size="0.625">
-           <origin xyz="-3.8 0 1.5" rpy="1.571 0 -1.571" />
+           family="36h11" ID="11" size="1.25">
+           <origin xyz="-3.8 0 2" rpy="1.571 0 -1.571" />
     </xacro:apriltag_marker>
     
   <!-- left -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_2" parent="/base_link"
-           family="36h11" ID="12" size="0.625">
-           <origin xyz="-1 0.7 1.5" rpy="1.571 3.141 3.141" />
+           family="36h11" ID="12" size="1.25">
+           <origin xyz="-1 0.7 2" rpy="1.571 3.141 3.141" />
     </xacro:apriltag_marker>
 
     
 
     <!-- right -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_3" parent="/base_link"
-           family="36h11" ID="13" size="0.625">
-           <origin xyz="-1.0 -0.7 1.5" rpy="1.571 3.141 0" />
+           family="36h11" ID="13" size="1.25">
+           <origin xyz="-1.0 -0.7 2" rpy="1.571 3.141 0" />
     </xacro:apriltag_marker>
 
 

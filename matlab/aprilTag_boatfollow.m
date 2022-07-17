@@ -1,4 +1,4 @@
-function [left,right] = aprilTag_thrustcmd(dist,head)
+function [left,right] = aprilTag_boatfollow(dist,head)
 % aprilTag2cmd_vel receives tf translation data from the apriltag_ros
 % wrapper and calculates left and right thrust commands
 
@@ -27,9 +27,9 @@ psi=mean(head);
 % left = (k_v*dist)-turn
 % right = (k_v*dist)+turn
 if dist > 50
-    fwd = 1.25;
-elseif dist <= 50 && dist > 10
-    fwd = (1.25/40)*dist - (12.5/40);
+    fwd = 2;
+elseif dist <= 50 && dist > 5
+    fwd = (2/40)*dist - (10/45);
 else
     fwd = 0;
 end
@@ -44,7 +44,7 @@ else
     turn = 0;
 end
 k_v = 0.3;
-k_r = 1.5;
+k_r = 2;
 left = k_v*fwd -k_r*(sign(psi)*turn);
 right = k_v*fwd + k_r*(sign(psi)*turn);
     
