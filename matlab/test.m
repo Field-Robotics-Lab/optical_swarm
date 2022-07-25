@@ -43,6 +43,7 @@ if isempty(tag_index) == 1
     tags = {};
 else
     clear tag_tf
+    clear tags
    for i=1:numel(tag_index)
         tags{i} = frames{tag_index(i)};
    end
@@ -78,5 +79,5 @@ end
 % 
 % end
 
-waitfor(rate);
+% waitfor(rate);
 end

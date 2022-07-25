@@ -33,6 +33,7 @@ if isempty(boat_index) == 1
     boat_tags = {};
 else
     clear boat_tag_tf
+    clear boat_tags
    for i=1:numel(boat_index)
         boat_tags{i} = frames{boat_index(i)};
    end
@@ -47,5 +48,5 @@ send(sandwich_1_left_pub, sandwich_1_left_msg);
 send(sandwich_1_right_pub, sandwich_1_right_msg);
  end
 
-waitfor(rate);
+% waitfor(rate);
 end
