@@ -49,7 +49,7 @@
 
 
   <group ns="robot1">
-    <include file="$(find sandwich_gazebo)/launch/sandwich_multi.launch">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
       <arg name="x" value="-542"/>
       <arg name="y" value="165"/>
       <arg name="z" value="0"/>
@@ -59,6 +59,11 @@
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_1"/>
       <arg name="robot_name" value="sandwich_1"/>
+      <arg name="front_ID" value="20"/>
+      <arg name="back_ID" value="21"/>
+      <arg name="left_ID" value="22"/>
+      <arg name="right_ID" value="23"/>
+
     </include>
     <node pkg="robot_state_publisher" type="robot_state_publisher"
 	  name="robot_state_publisher" >

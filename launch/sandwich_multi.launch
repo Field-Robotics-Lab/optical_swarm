@@ -7,14 +7,20 @@
 	<arg name="y" default="160.0"/>
 	<arg name="z" default="0.0"/>
 	<arg name="P" default="0"/>
-  <arg name="R" default="0"/>
-  <arg name="Y" default="0"/>
-
+        <arg name="R" default="0"/>
+   	<arg name="Y" default="0"/>
+	<arg name="front_ID" default="10"/>
+	<arg name="back_ID" default="11"/>
+	<arg name="left_ID" default="12"/>
+	<arg name="right_ID" default="13"/>
+	
+	
 	<!-- Send robot urdf to param server -->
 	<param name="$(arg namespace)/robot_description" 
   		command="$(find xacro)/xacro '$(find optical_swarm)/urdf/sandwich.xacro'
     					 locked:=$(arg robot_locked)
-        	   	 namespace:=$(arg namespace)"/>
+        	   	 namespace:=$(arg namespace) front_ID:=$(arg front_ID)
+back_ID:=$(arg back_ID) left_ID:=$(arg left_ID) right_ID:=$(arg right_ID)"/>
 
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" 
           args="-x $(arg x) -y $(arg y) -z $(arg z) 

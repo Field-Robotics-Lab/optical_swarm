@@ -2,6 +2,11 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="sandwich"> 
   <xacro:arg name="locked" default="false" />
   <xacro:arg name="namespace" default="sandwich"/>
+  <xacro:arg name="front_ID" default="10"/>
+  <xacro:arg name="back_ID" default="11"/>
+  <xacro:arg name="left_ID" default="12"/>
+  <xacro:arg name="right_ID" default="13"/>
+
 
   <!-- Include macros for dynamics plugins -->
   <xacro:include filename="$(find sandwich_description)/urdf/macros.xacro" />
@@ -93,19 +98,19 @@
 	
 	<!-- front -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_0" parent="/base_link"
-           family="36h11" ID="10" size="1.25">
+           family="36h11" ID="$(arg front_ID)" size="1.25">
            <origin xyz="0 0 2" rpy="1.571 0 1.571" />
     </xacro:apriltag_marker>
      
     <!-- back -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_1" parent="/base_link"
-           family="36h11" ID="11" size="1.25">
+           family="36h11" ID="$(arg back_ID)" size="1.25">
            <origin xyz="-3.8 0 2" rpy="1.571 0 -1.571" />
     </xacro:apriltag_marker>
     
   <!-- left -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_2" parent="/base_link"
-           family="36h11" ID="12" size="1.25">
+           family="36h11" ID="$(arg left_ID)" size="1.25">
            <origin xyz="-1 0.7 2" rpy="1.571 3.141 3.141" />
     </xacro:apriltag_marker>
 
@@ -113,7 +118,7 @@
 
     <!-- right -->
     <xacro:apriltag_marker namespace="$(arg namespace)" name="/tag_3" parent="/base_link"
-           family="36h11" ID="13" size="1.25">
+           family="36h11" ID="$(arg right_ID)" size="1.25">
            <origin xyz="-1.0 -0.7 2" rpy="1.571 3.141 0" />
     </xacro:apriltag_marker>
 
