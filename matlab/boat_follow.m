@@ -25,7 +25,7 @@ while true
 tftree = rostf;
 frames = tftree.AvailableFrames;
 
-boat_index = find(not(cellfun('isempty',strfind(frames,'boat_tag'))));
+boat_index = find(not(cellfun('isempty',strfind(frames,'boat0_tag'))));
 
 
 % -------------------- Boat Following -----------------------------
