@@ -72,7 +72,29 @@
     
   </group>
   
-  
+  <group ns="robot2">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
+      <arg name="x" value="-552"/>
+      <arg name="y" value="168"/>
+      <arg name="z" value="0"/>
+      <arg name="P" value="0"/>
+      <arg name="R" value="0"/>
+      <arg name="Y" value="1"/>
+      <arg name="robot_locked" value="false"/>
+      <arg name="namespace" value="sandwich_2"/>
+      <arg name="robot_name" value="sandwich_2"/>
+      <arg name="front_ID" value="30"/>
+      <arg name="back_ID" value="31"/>
+      <arg name="left_ID" value="32"/>
+      <arg name="right_ID" value="33"/>
+
+    </include>
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher" >
+	  <remap from="robot_description" to="/robot2/sandwich_2/robot_description" />
+    </node>
+    
+  </group>
   
         <!-- Image Processing and Tag Detection Nodes -->
   <include file="$(find optical_swarm)/launch/detection_trial.launch">
@@ -80,9 +102,11 @@
   </include>
         
   <include file="$(find optical_swarm)/launch/detection_trial.launch">
-    
   </include>
-              
+  
+  <include file="$(find optical_swarm)/launch/detection_trial.launch">
+    <arg name="robot_name"   value="/robot2/sandwich_2"/>
+  </include>         
         
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
   <group ns="april_cube">     
