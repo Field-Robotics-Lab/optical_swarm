@@ -18,7 +18,7 @@ sandwich_1_left_pub = rospublisher('/sandwich_1/thrusters/left_thrust_cmd','std_
 sandwich_1_right_pub = rospublisher('/sandwich_1/thrusters/right_thrust_cmd','std_msgs/Float32');
 sandwich_1_left_msg = rosmessage(sandwich_1_left_pub);
 sandwich_1_right_msg = rosmessage(sandwich_1_right_pub);
-f
+
 
 
 %%
