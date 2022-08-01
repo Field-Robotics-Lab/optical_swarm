@@ -1,10 +1,13 @@
-function [debug,left,right] = aprilTag_tagfollow(ID,dist,head)
-% aprilTag_tagfollow receives tag IDs, distances,and headings and computes
-% left and right turn commands to follow AprilCube rabbit model2
+function [debug,left,right] = aprilTag_tagfollow(ID,dist,head,range)
+% aprilTag_tagfollow receives tag IDs, distances,headings, and the range
+% of tag IDs and computes left and right turn 
+% commands to follow AprilCube rabbit model
 
 
 % AprilCube Tag numbers are 90-95
-ind = find(ID >=90);
+indmin = find(ID >= min(range));
+indmax = find(ID <= max(range));
+ind=intersect(indmin,indmax);
 debug = ID(ind);
 dist = dist(ind);
 head = head(ind);

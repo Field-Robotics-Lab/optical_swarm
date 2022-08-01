@@ -1,11 +1,14 @@
-function [debug,left,right] = aprilTag_boatfollow(ID,dist,head)
-% aprilTag_boatfollow receives tag IDs, distances, and heading angles and
-% computes left and right turn commands to follow another sandwich boat
+function [debug,left,right] = aprilTag_boatfollow(ID,dist,head,range)
+% aprilTag_boatfollow receives tag IDs, distances, heading angles, 
+% and the range of desired tag values and computes left and right 
+% turn commands to follow another sandwich boat
 
 % Tag numbers for the boat to be followed must be known and specified
 
 % Sandwich 0 tag numbers are 00-03
-ind = find(ID <=4);
+indmin = find(ID >= min(range));
+indmax = find(ID <= max(range));
+ind=intersect(indmin,indmax);
 debug = ID(ind);
 dist = dist(ind);
 head = head(ind);
