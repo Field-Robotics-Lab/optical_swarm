@@ -1,10 +1,10 @@
 function [left,right] = aprilTag_tagfollow(ID,dist,head)
-% aprilTag2cmd_vel receives tf translation data from the apriltag_ros
-% wrapper and calculates left and right thrust commands
+% aprilTag_tagfollow receives tag IDs, distances,and headings and computes
+% left and right turn commands to follow AprilCube rabbit model2
 
 
 % AprilCube Tag numbers are 1-4
-ind = find(ID >=20);
+ind = find(ID >=5);
 dist = dist(ind);
 head = head(ind);
 
