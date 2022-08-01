@@ -3,8 +3,9 @@ function [left,right] = aprilTag_tagfollow(ID,dist,head)
 % left and right turn commands to follow AprilCube rabbit model2
 
 
-% AprilCube Tag numbers are 1-4
-ind = find(ID >=5);
+% AprilCube Tag numbers are 90-95
+ind = find(ID >=90);
+debug = ID(ind)
 dist = dist(ind);
 head = head(ind);
 
@@ -30,8 +31,8 @@ elseif val <=30 && val>5
 else
     turn = 0;
 end
-k_v = 0.3;
-k_r = 1.5;
+k_v = 0.1; % default 0.3
+k_r = 1.0; % default 1.5
 left = k_v*fwd -k_r*(sign(psi)*turn);
 right = k_v*fwd + k_r*(sign(psi)*turn);
     

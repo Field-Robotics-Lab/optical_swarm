@@ -38,6 +38,10 @@
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_0"/>
       <arg name="robot_name" value="sandwich_0"/>
+      <arg name="front_ID" value="00"/>
+      <arg name="back_ID" value="01"/>
+      <arg name="left_ID" value="02"/>
+      <arg name="right_ID" value="03"/>
      </include>
      <node pkg="robot_state_publisher" type="robot_state_publisher"
 	  name="robot_state_publisher" > 
@@ -59,10 +63,10 @@
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_1"/>
       <arg name="robot_name" value="sandwich_1"/>
-      <arg name="front_ID" value="20"/>
-      <arg name="back_ID" value="21"/>
-      <arg name="left_ID" value="22"/>
-      <arg name="right_ID" value="23"/>
+      <arg name="front_ID" value="10"/>
+      <arg name="back_ID" value="11"/>
+      <arg name="left_ID" value="12"/>
+      <arg name="right_ID" value="13"/>
 
     </include>
     <node pkg="robot_state_publisher" type="robot_state_publisher"
@@ -83,10 +87,10 @@
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_2"/>
       <arg name="robot_name" value="sandwich_2"/>
-      <arg name="front_ID" value="30"/>
-      <arg name="back_ID" value="31"/>
-      <arg name="left_ID" value="32"/>
-      <arg name="right_ID" value="33"/>
+      <arg name="front_ID" value="20"/>
+      <arg name="back_ID" value="21"/>
+      <arg name="left_ID" value="22"/>
+      <arg name="right_ID" value="23"/>
 
     </include>
     <node pkg="robot_state_publisher" type="robot_state_publisher"

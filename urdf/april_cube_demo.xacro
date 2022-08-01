@@ -16,7 +16,7 @@
   
 
   <xacro:april_cube name="april_cube" size="1.5" marker_size="1.25"
-      id_top="0" id_front="1" id_right="2" id_back="3" id_left="4" id_bottom="5" />
+      id_top="90" id_front="91" id_right="92" id_back="93" id_left="94" id_bottom="95" />
 
      
   <!--link name="world" />

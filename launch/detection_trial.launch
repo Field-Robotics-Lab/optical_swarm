@@ -25,7 +25,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group>
@@ -52,7 +52,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group>
@@ -79,7 +79,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group> 
@@ -106,7 +106,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group>
@@ -133,7 +133,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group>
@@ -160,7 +160,7 @@
     <remap from="camera_info" to="$(arg camera_name)/camera_info" />
     <remap from="tag_detections" to="$(arg camera_name)/tag_detections" />
     <remap from="tag_detections_image" to="$(arg camera_name)/tag_detections_image" />
-    <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
+    <param name="publish_tag_detections_image" type="bool" value="true" />      <!-- default: false -->
     <param name="remove_duplicates" type="bool" value="false" />
   </node>
 </group>
