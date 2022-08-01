@@ -51,7 +51,7 @@ else
          tag_tf(j) = getTransform(tftree,'sandwich_0/base_link',tags{j},'Timeout',inf);
     end
 [apriltagID,aprildist,aprilhead] = aprilTag_xform(tag_tf)
-[aprilleft,aprilright] = aprilTag_thrustcmd(aprildist,aprilhead);
+[aprilleft,aprilright] = aprilTag_tagfollow(aprildist,aprilhead);
  sandwich_0_left_msg.Data = aprilleft;
  sandwich_0_right_msg.Data = aprilright;
 send(sandwich_0_left_pub, sandwich_0_left_msg);

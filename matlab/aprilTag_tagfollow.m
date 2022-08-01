@@ -1,31 +1,18 @@
-function [left,right] = aprilTag_thrustcmd(dist,head)
+function [left,right] = aprilTag_tagfollow(ID,dist,head)
 % aprilTag2cmd_vel receives tf translation data from the apriltag_ros
 % wrapper and calculates left and right thrust commands
 
-% Position
-% X = trans.X;
-% Y = trans.Y;
-% Z = trans.Z;
 
-% Quaternions
-% w = rot.W;
-% x = rot.X;
-% y = rot.Y;
-% z = rot.Z;
+% AprilCube Tag numbers are 1-4
+ind = find(ID >=20);
+dist = dist(ind);
+head = head(ind);
 
 
 dist = mean(dist);
-% angle = quat2eul([w x y z]);
-% head = rad2deg(angle(1))
 psi=mean(head);
 
-% Linear and Angular gains and command velocities
-% k_v=0.1;
-% k_h=0.1;
-% turn = k_h*psi;
-% 
-% left = (k_v*dist)-turn
-% right = (k_v*dist)+turn
+
 if dist > 50
     fwd = 1.25;
 elseif dist <= 50 && dist > 10
