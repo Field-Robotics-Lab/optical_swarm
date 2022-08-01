@@ -6,9 +6,13 @@ function [tagID,dist,head] = tag_disthead(ID,pose,xform)
 % tag_dist_head returns:
 %   - vector of tag IDs
 %   - vector of distances from BODY ORIGIN to tags 
-%   - vector of heading angles (degrees)
+%   - vector of heading angles (degrees) CCW positive, 0* dead ahead
     
-
+if isempty(ID) == 1
+    tagID = [];
+    dist = [];
+    head = [];
+else
 
 origin = [xform.Transform.Translation.X, xform.Transform.Translation.Y, ...
     xform.Transform.Translation.Z]';
@@ -25,4 +29,5 @@ for ii=1:numel(tagID)
     dist(ii) = norm(pos(:,ii));
     head(ii) = atan2d(pos(2,ii),pos(1,ii));
 
+end
 end

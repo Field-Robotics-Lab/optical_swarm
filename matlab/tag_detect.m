@@ -4,7 +4,10 @@ function [ID,pose] = tag_detect(tags)
 % vector with the X,Y,Z positions of each tag IN THE CAMERA REFERENCE FRAME
 
 numtags = numel(tags.Detections);
-
+if numtags == 0
+    ID = [];
+    pose = [];
+else
 for i = 1:numtags
     ID(i) = tags.Detections(i).Id;
     pose(1,i) = tags.Detections(i).Pose.Pose.Pose.Position.X;
