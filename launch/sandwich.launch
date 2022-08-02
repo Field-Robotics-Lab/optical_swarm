@@ -119,7 +119,7 @@
      
         
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param april_description -x -480 -y 210 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
+        args="-urdf -param april_description -x -480 -y 182 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
               
               <!-- Convert PointStamped messages to model states -->
   <node name="pointstamped2modelstate" pkg="optical_swarm"
@@ -130,7 +130,7 @@
   
   <node pkg="optical_swarm" type="rabbit.py" name="april_cube">
     <param name="update_rate" type="double" value="10"/>
-    <param name="velocity" type="double" value="2.5"/>
+    <param name="velocity" type="double" value="3"/>
     <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
     
   </node>  

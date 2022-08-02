@@ -35,7 +35,7 @@ else
     turn = 0;
 end
 k_v = 0.3; % default 0.3
-k_r = 1.5; % default 1.5
+k_r = 1.7; % default 1.5
 left = k_v*fwd -k_r*(sign(psi)*turn);
 right = k_v*fwd + k_r*(sign(psi)*turn);
     

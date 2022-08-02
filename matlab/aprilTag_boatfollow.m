@@ -34,8 +34,8 @@ elseif val <=30 && val>5
 else
     turn = 0;
 end
-k_v = 0.3;
-k_r = 2;
+k_v = 0.4; % 0.3
+k_r = 2; % 2
 left = k_v*fwd -k_r*(sign(psi)*turn);
 right = k_v*fwd + k_r*(sign(psi)*turn);
     

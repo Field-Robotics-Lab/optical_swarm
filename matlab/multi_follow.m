@@ -61,8 +61,9 @@ sandwich_2_left_msg = rosmessage(sandwich_2_left_pub);
 sandwich_2_right_msg = rosmessage(sandwich_2_right_pub);
 
 
-while true
 
+
+% -------------------- Transforms from camera to boat center
 tftree = rostf;
 
 %---------------------- Boat 0 ----------------------------
@@ -72,6 +73,27 @@ sand0_side_right_xform = getTransform(tftree,'sandwich_0/base_link','sandwich_0/
 sand0_side_left_xform = getTransform(tftree,'sandwich_0/base_link','sandwich_0/side_left_camera_link_optical','Timeout',inf); 
 sand0_rear_right_xform = getTransform(tftree,'sandwich_0/base_link','sandwich_0/rear_right_camera_link_optical','Timeout',inf); 
 sand0_rear_left_xform = getTransform(tftree,'sandwich_0/base_link','sandwich_0/rear_left_camera_link_optical','Timeout',inf); 
+
+% -------------------- Boat 1 -------------------------
+sand1_front_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/front_right_camera_link_optical','Timeout',inf);  
+sand1_front_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/front_left_camera_link_optical','Timeout',inf); 
+sand1_side_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/side_right_camera_link_optical','Timeout',inf); 
+sand1_side_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/side_left_camera_link_optical','Timeout',inf); 
+sand1_rear_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/rear_right_camera_link_optical','Timeout',inf); 
+sand1_rear_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/rear_left_camera_link_optical','Timeout',inf);    
+
+
+% ------------------------ Boat 2 -------------------------
+sand2_front_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/front_right_camera_link_optical','Timeout',inf);  
+sand2_front_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/front_left_camera_link_optical','Timeout',inf); 
+sand2_side_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/side_right_camera_link_optical','Timeout',inf); 
+sand2_side_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/side_left_camera_link_optical','Timeout',inf); 
+sand2_rear_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/rear_right_camera_link_optical','Timeout',inf); 
+sand2_rear_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/rear_left_camera_link_optical','Timeout',inf);    
+
+while true
+
+%---------------------- Boat 0 ----------------------------
 
 
 sand0_front_right = receive(sand0_front_right_sub,inf);
@@ -113,17 +135,13 @@ if isempty(debug0) == 0
     send(sandwich_0_left_pub, sandwich_0_left_msg);
     send(sandwich_0_right_pub, sandwich_0_right_msg);
 else
-
+%     sandwich_0_left_msg.Data = 0;
+%     sandwich_0_right_msg.Data = 0;
+%     send(sandwich_0_left_pub, sandwich_0_left_msg);
+%     send(sandwich_0_right_pub, sandwich_0_right_msg);
 end
 
 % -------------------- Boat 1 -------------------------
-sand1_front_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/front_right_camera_link_optical','Timeout',inf);  
-sand1_front_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/front_left_camera_link_optical','Timeout',inf); 
-sand1_side_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/side_right_camera_link_optical','Timeout',inf); 
-sand1_side_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/side_left_camera_link_optical','Timeout',inf); 
-sand1_rear_right_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/rear_right_camera_link_optical','Timeout',inf); 
-sand1_rear_left_xform = getTransform(tftree,'sandwich_1/base_link','sandwich_1/rear_left_camera_link_optical','Timeout',inf);    
-
 sand1_front_right = receive(sand1_front_right_sub,inf);
 sand1_front_left = receive(sand1_front_left_sub,inf);
 sand1_side_right = receive(sand1_side_right_sub,inf);
@@ -164,17 +182,13 @@ if isempty(debug1) == 0
     send(sandwich_1_left_pub, sandwich_1_left_msg);
     send(sandwich_1_right_pub, sandwich_1_right_msg);
 else
-
+    sandwich_1_left_msg.Data = 0;
+    sandwich_1_right_msg.Data = 0;
+    send(sandwich_1_left_pub, sandwich_1_left_msg);
+    send(sandwich_1_right_pub, sandwich_1_right_msg);
 end
 
 % ------------------------ Boat 2 -------------------------
-sand2_front_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/front_right_camera_link_optical','Timeout',inf);  
-sand2_front_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/front_left_camera_link_optical','Timeout',inf); 
-sand2_side_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/side_right_camera_link_optical','Timeout',inf); 
-sand2_side_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/side_left_camera_link_optical','Timeout',inf); 
-sand2_rear_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/rear_right_camera_link_optical','Timeout',inf); 
-sand2_rear_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/rear_left_camera_link_optical','Timeout',inf);    
-
 sand2_front_right = receive(sand2_front_right_sub,inf);
 sand2_front_left = receive(sand2_front_left_sub,inf);
 sand2_side_right = receive(sand2_side_right_sub,inf);
@@ -218,8 +232,11 @@ if isempty(debug2) == 0
     send(sandwich_2_left_pub, sandwich_2_left_msg);
     send(sandwich_2_right_pub, sandwich_2_right_msg);
 else
-
+    sandwich_1_left_msg.Data = 0;
+    sandwich_1_right_msg.Data = 0;
+    send(sandwich_1_left_pub, sandwich_1_left_msg);
+    send(sandwich_1_right_pub, sandwich_1_right_msg);
 end
 
-pause(0.2)
+waitfor(rate);
 end
