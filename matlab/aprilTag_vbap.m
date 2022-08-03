@@ -1,0 +1,100 @@
+function [debug,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range)
+% aprilTag_vbap implements a vehiche-body artificial potential field
+% to maintain inter-vehicle spacing while tracking an aprilCube target.
+% 
+% aprilTag_vbap receives:
+%   - tag IDs (1 x k)
+%   - distances (1 x k)
+%   - heading angles (1 x k)
+%   - range of target IDs (1 x l)
+%   - range of other boat IDs (m x n)
+% where:
+%   - k = number of currently detected tags
+%   - l = number of tags on target (aprilCube, lead boat, etc.)
+%   - m = number of swarm partner vessels
+%   - n = number of tags on partner vessels
+% 
+% aprilTag_vbap returns:
+%   - left and right thrust commands
+
+
+
+
+target_indmin = find(ID >= min(target_range));
+target_indmax = find(ID <= max(target_range));
+target_ind=intersect(target_indmin,target_indmax);
+debug = ID(target_ind);
+dist_target = dist(target_ind);
+head_target = head(target_ind);
+
+
+dist_target = mean(dist_target);
+psi_target=mean(head_target);
+
+% Forward component of thrust commands: depends only on distance from
+% target
+if dist_target > 50
+    fwd = 2;
+elseif dist_target <= 50 && dist_target > 5
+    fwd = (2/40)*dist_target - (10/45);
+else
+    fwd = 0;
+end
+
+% Distance and heading to partner vessels
+
+% Spring dmin, dmax, ko
+dmin = 10;
+dmax = 25;
+ko = -0.1;
+
+m = height(boat_range);
+n = length(boat_range);
+dist_boat = zeros(1,m);
+head_boat = zeros(1,m);
+
+
+for ii = 1:m
+    boat_indmin = find(ID >= min(boat_range(ii,:)));
+    boat_indmax = find(ID <= max(boat_range(ii,:)));
+    boat_ind=intersect(boat_indmin,boat_indmax);
+    boat_ID(ii,1:numel(boat_ind)) = ID(boat_ind);
+    dist_boat(ii) = mean(dist(boat_ind));
+    head_boat(ii) = mean(head(boat_ind));
+    if dist_boat(ii) < dmax
+        turn_boat(ii) = ko*(dist_boat(ii)-dmin)*sign(head_boat(ii));
+
+    else
+        turn_boat(ii) = 0;
+    end
+
+end
+
+
+debug
+dist_target
+psi_target
+boat_ID'
+dist_boat
+head_boat
+turn_boat = sum(turn_boat)
+
+
+
+val=abs(psi_target);
+
+if val > 30
+    turn_target = 1;
+elseif val <=30 && val>5
+    turn_target = 0.04*val - 0.2;
+else
+    turn_target = 0;
+end
+k_v = 0.4; % 0.3
+k_r = 2; % 2
+left = k_v*fwd -k_r*(sign(psi_target)*turn_target);
+right = k_v*fwd + k_r*(sign(psi_target)*turn_target);
+    
+turn_target
+
+end
