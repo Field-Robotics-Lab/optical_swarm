@@ -29,7 +29,7 @@
 
  <group ns="robot0">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-532"/>
+      <arg name="x" value="-512"/>
       <arg name="y" value="162"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
@@ -54,7 +54,7 @@
 
   <group ns="robot1">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-542"/>
+      <arg name="x" value="-532"/>
       <arg name="y" value="165"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
@@ -76,10 +76,10 @@
     
   </group>
   
-  <group ns="robot2">
+  <!--group ns="robot2">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
       <arg name="x" value="-552"/>
-      <arg name="y" value="168"/>
+      <arg name="y" value="172"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
@@ -98,7 +98,7 @@
 	  <remap from="robot_description" to="/robot2/sandwich_2/robot_description" />
     </node>
     
-  </group>
+  </group-->
   
         <!-- Image Processing and Tag Detection Nodes -->
   <include file="$(find optical_swarm)/launch/detection_trial.launch">
@@ -108,9 +108,9 @@
   <include file="$(find optical_swarm)/launch/detection_trial.launch">
   </include>
   
-  <include file="$(find optical_swarm)/launch/detection_trial.launch">
+  <!--include file="$(find optical_swarm)/launch/detection_trial.launch">
     <arg name="robot_name"   value="/robot2/sandwich_2"/>
-  </include>         
+  </include-->         
         
        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
   <group ns="april_cube">     

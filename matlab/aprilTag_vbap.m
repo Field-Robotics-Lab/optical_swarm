@@ -1,4 +1,4 @@
-function [debug,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range)
+function [debug,target_ind,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range)
 % aprilTag_vbap implements a vehiche-body artificial potential field
 % to maintain inter-vehicle spacing while tracking an aprilCube target.
 % 
@@ -18,18 +18,18 @@ function [debug,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range
 %   - left and right thrust commands
 
 
-
 debug = ID;
 target_indmin = find(ID >= min(target_range));
 target_indmax = find(ID <= max(target_range));
 target_ind=intersect(target_indmin,target_indmax);
+
 if isempty(target_ind) == 1
-    dist_target = 0;
-    head_target = 0;
+   dist_target = 20;
+   head_target = 0;
 else
-    dist_target = dist(target_ind);
-    head_target = head(target_ind);
-end
+   dist_target = dist(target_ind);
+   head_target = head(target_ind);
+ end
 
 dist_target = mean(dist_target);
 psi_target=mean(head_target);
@@ -48,8 +48,8 @@ end
 
 % Spring dmin, dmax, ko
 dmin = 15;
-dmax = 30;
-ko = -0.1;
+dmax = 40;
+ko = 0;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -101,10 +101,9 @@ end
 
 turn_target = sign(psi_target)*turn_target;
 
-k_v = 0.3; % 0.3
-k_r = 1.5; % 2
+k_v = 0.6; % 0.3
+k_r = 2; % 2
 left = k_v*fwd -k_r*(turn_target - turn_boat);
 right = k_v*fwd + k_r*(turn_target - turn_boat);
     
-
 end
