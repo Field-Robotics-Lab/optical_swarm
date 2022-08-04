@@ -1,4 +1,4 @@
-function [debug,target_ind,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range)
+function [debug,target_ID,left,right] = aprilTag_vbap(ID,dist,head,target_range,boat_range)
 % aprilTag_vbap implements a vehiche-body artificial potential field
 % to maintain inter-vehicle spacing while tracking an aprilCube target.
 % 
@@ -22,9 +22,11 @@ debug = ID;
 target_indmin = find(ID >= min(target_range));
 target_indmax = find(ID <= max(target_range));
 target_ind=intersect(target_indmin,target_indmax);
-
+target_ID = ID(target_ind);
+% ****** ADD LOGIC HERE TO SELECT PARTNER BOAT AS TARGET TO FOLLOW IF 
+% ****** APRILCUBE IS LOST
 if isempty(target_ind) == 1
-   dist_target = 20;
+   dist_target = 10;
    head_target = 0;
 else
    dist_target = dist(target_ind);
@@ -48,8 +50,8 @@ end
 
 % Spring dmin, dmax, ko
 dmin = 15;
-dmax = 40;
-ko = 0;
+dmax = 30;
+ko = -0.075;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -78,7 +80,7 @@ for ii = 1:m
 end
 
 turn_boat = sum(turn_boat);
-
+% 
 % dist_target
 % psi_target
 % boat_ID'
@@ -101,8 +103,8 @@ end
 
 turn_target = sign(psi_target)*turn_target;
 
-k_v = 0.6; % 0.3
-k_r = 2; % 2
+k_v = 0.4; % 0.3
+k_r = 1.5; % 2
 left = k_v*fwd -k_r*(turn_target - turn_boat);
 right = k_v*fwd + k_r*(turn_target - turn_boat);
     
