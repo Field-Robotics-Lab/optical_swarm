@@ -51,11 +51,12 @@ max_thrust = 1;
 K_p = 1;
 K_i = 0.1;
 
-fwd = 0.2;
 
 while true
 
-%---------------------- Boat 0 ----------------------------
+
+    
+%---------------------- Turn Rate Controller ----------------------------
 imu = receive(sand0_imu_sub);
 turn_rate = rad2deg(imu.AngularVelocity.Z);
 rate_err1 = (rate_cmd - turn_rate);
@@ -67,22 +68,20 @@ left_thrust = -min(max_thrust, max(-max_thrust,thrust))
 right_thrust = min(max_thrust, max(-max_thrust,thrust))
 
 % Update old error
-rate_err_old = rate_err1;
+ rate_err_old = rate_err1;
+
+% Publish thrust commands
+
  sandwich_0_left_msg.Data = fwd+left_thrust;
  sandwich_0_right_msg.Data = fwd+right_thrust;
  send(sandwich_0_left_pub, sandwich_0_left_msg);
  send(sandwich_0_right_pub, sandwich_0_right_msg);
 
-figure(3)
-plot(iter,turn_rate,'r*','MarkerSize',4)
 
 
-iter = iter+1;
+
+
 waitfor(rate);
 end
 
-
-figure(3)
-yline(turn_rate)
-legend(sprintf('Turn Rate = %0.2f deg/s',turn_rate),'Location','best')
 

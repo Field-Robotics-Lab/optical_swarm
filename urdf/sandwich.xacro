@@ -29,7 +29,7 @@
   <!-- Thrusters -->
   <xacro:arg name="thruster_namespace" default="thrusters/"/>
   <!-- <xacro:property name="thruster_namespace" value="$(arg thruster_namespace)" scope="global" /> -->
-  <xacro:include filename="$(find sandwich_description)/urdf/thrusters.xacro" />
+  <xacro:include filename="$(find optical_swarm)/urdf/thrusters.xacro" />
   <xacro:add_thrusters namespace="$(arg namespace)"/>
 
   <!-- Decide if we lock the robot to the world -->

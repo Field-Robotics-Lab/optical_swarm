@@ -29,12 +29,12 @@
 
  <group ns="robot0">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-900"/>
-      <arg name="y" value="450"/>
+      <arg name="x" value="-512"/>
+      <arg name="y" value="162"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
-      <arg name="Y" value="0"/>
+      <arg name="Y" value="1"/>
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_0"/>
       <arg name="robot_name" value="sandwich_0"/>
@@ -49,6 +49,69 @@
      </node>
          
   </group>
+
+<group ns="robot1">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
+      <arg name="x" value="-532"/>
+      <arg name="y" value="165"/>
+      <arg name="z" value="0"/>
+      <arg name="P" value="0"/>
+      <arg name="R" value="0"/>
+      <arg name="Y" value="1"/>
+      <arg name="robot_locked" value="false"/>
+      <arg name="namespace" value="sandwich_1"/>
+      <arg name="robot_name" value="sandwich_1"/>
+      <arg name="front_ID" value="10"/>
+      <arg name="back_ID" value="11"/>
+      <arg name="left_ID" value="12"/>
+      <arg name="right_ID" value="13"/>
+
+    </include>
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher" >
+	  <remap from="robot_description" to="/robot1/sandwich_1/robot_description" />
+    </node>
+    
+  </group>
+  
+  
+ <include file="$(find optical_swarm)/launch/detection_trial.launch">
+  </include>
+  
+  <include file="$(find optical_swarm)/launch/detection_trial.launch">
+    <arg name="robot_name"   value="/robot1/sandwich_1"/>
+  </include>
+  
+        <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
+  <group ns="april_cube">     
+  <param name="april_description" 
+         command="$(find xacro)/xacro --inorder $(find optical_swarm)/urdf/april_cube_demo.xacro" />
+     
+        
+  <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param april_description -x -530 -y 200 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
+              
+              <!-- Convert PointStamped messages to model states -->
+  <node name="pointstamped2modelstate" pkg="optical_swarm"
+	type="pointstamped2modelstate.py" output="screen">
+    <param name="model_name" value="april_cube"/>
+    <param name="reference_frame" value="world"/>
+  </node>
+  
+  <node pkg="optical_swarm" type="rabbit.py" name="april_cube">
+    <param name="update_rate" type="double" value="10"/>
+    <param name="velocity" type="double" value="2.5"/>
+    <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
+    
+  </node>  
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher" >
+	  <remap from="robot_description" to="april_description" />
+    </node>
+  </group>
+  
+
+
 
           
 </launch>

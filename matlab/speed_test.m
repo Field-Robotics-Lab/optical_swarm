@@ -36,7 +36,7 @@ axis([-1100 -700 200 600])
 title('Position')
 
 left_thrust = 1;
-right_thrust = 0.5; 
+right_thrust = -1; 
 
 % figure(2)
 % grid on
