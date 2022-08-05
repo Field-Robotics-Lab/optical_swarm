@@ -37,7 +37,7 @@ else
  end
 dist_target = mean(dist_target);
 dist_net = dist_target-follow_dist;
-turn_target=mean(head_target)-head_offset;
+
 
 % Forward component of thrust commands: depends only on distance from
 % target
@@ -47,7 +47,7 @@ turn_target=mean(head_target)-head_offset;
 % Spring dmin, dmax, ko
 d0 = 25;
 dmax = 50;
-ko = 0.05;
+ko = 0.1;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -74,7 +74,9 @@ for ii = 1:m
     end
 
 end
+head_offset = head_offset*sign(sum(head_boat));
 
+turn_target=mean(head_target)-head_offset;
 turn_boat = sum(turn_boat);
 
 

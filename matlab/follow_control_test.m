@@ -82,7 +82,7 @@ dist_old0 = 0;
 dist_old1 = 0;
 
 head_offset0 = 10;
-head_offset1 = -head_offset0;
+head_offset1 = head_offset0;
 
 % Gains
 K_p = 0.1;
@@ -230,10 +230,10 @@ if isempty(debug1) == 0
     send(sandwich_1_left_pub, sandwich_1_left_msg);
     send(sandwich_1_right_pub, sandwich_1_right_msg);
 else
-    sandwich_1_left_msg.Data = 0;
-    sandwich_1_right_msg.Data = 0;
-    send(sandwich_1_left_pub, sandwich_1_left_msg);
-    send(sandwich_1_right_pub, sandwich_1_right_msg);
+%     sandwich_1_left_msg.Data = 0;
+%     sandwich_1_right_msg.Data = 0;
+%     send(sandwich_1_left_pub, sandwich_1_left_msg);
+%     send(sandwich_1_right_pub, sandwich_1_right_msg);
 end
 
 waitfor(rate);
