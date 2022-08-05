@@ -1,4 +1,4 @@
-function [debug,target_ID,speed,rate] = vbap_test(ID,dist,head,target_range,boat_range)
+function [debug,target_ID,speed,rate,dist_target] = vbap_test(ID,dist,head,target_range,boat_range,dist_old,head_offset)
 % aprilTag_vbap implements a vehiche-body artificial potential field
 % to maintain inter-vehicle spacing while tracking an aprilCube target.
 % 
@@ -23,7 +23,9 @@ target_indmin = find(ID >= min(target_range));
 target_indmax = find(ID <= max(target_range));
 target_ind=intersect(target_indmin,target_indmax);
 target_ID = ID(target_ind);
-follow_dist = 15;
+follow_dist = 20;
+
+
 % ****** ADD LOGIC HERE TO SELECT PARTNER BOAT AS TARGET TO FOLLOW IF 
 % ****** APRILCUBE IS LOST
 if isempty(target_ind) == 1
@@ -33,9 +35,9 @@ else
    dist_target = dist(target_ind);
    head_target = head(target_ind);
  end
-
-dist_target = mean(dist_target)-follow_dist;
-turn_target=mean(head_target);
+dist_target = mean(dist_target);
+dist_net = dist_target-follow_dist;
+turn_target=mean(head_target)-head_offset;
 
 % Forward component of thrust commands: depends only on distance from
 % target
@@ -43,9 +45,9 @@ turn_target=mean(head_target);
 % Distance and heading to partner vessels
 
 % Spring dmin, dmax, ko
-dmin = 20;
-dmax = 35;
-ko = 0.02;
+d0 = 25;
+dmax = 50;
+ko = 0.05;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -62,7 +64,7 @@ for ii = 1:m
         dist_boat(ii) = mean(dist(boat_ind));
         head_boat(ii) = mean(head(boat_ind));
         if dist_boat(ii) < dmax
-         turn_boat(ii) = ko*(dist_boat(ii)-dmin)*sign(head_boat(ii));
+         turn_boat(ii) = ko*(dist_boat(ii)-d0)*sign(head_boat(ii));
 
         else
         turn_boat(ii) = 0;
@@ -82,10 +84,15 @@ max_rate = 22; % 22
 
 % Speed and turn rate gains
 Ku = 0.5; % 0.3
+Kd = 0.1; % Derivative gain to avoid collision 0.02
+
 Kr = 0.4; % 2
 
+rel_vel = (dist_target - dist_old)/0.1;
+
+speed_cmd = Ku*dist_net + Kd*rel_vel;
 % Saturation 
-speed = min(max_speed,max(-max_speed,Ku*dist_target));
+speed = min(max_speed,max(-max_speed,Ku*speed_cmd));
 rate = min(max_rate,max(-max_rate,Kr*turn_target + turn_boat));
     
 end

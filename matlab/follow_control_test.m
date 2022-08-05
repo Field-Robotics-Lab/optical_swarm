@@ -78,6 +78,12 @@ rate_err_old1 = 0;
 rate_err1 = 0;
 rate_err_cum1=0;
 
+dist_old0 = 0;
+dist_old1 = 0;
+
+head_offset0 = 10;
+head_offset1 = -head_offset0;
+
 % Gains
 K_p = 0.1;
 K_i = 0.01;
@@ -125,11 +131,11 @@ sand0_head = [sand0_head_fr, sand0_head_fl, sand0_head_sr,...
 % boat_range0 = [10,11,12,13];
                
 target_range0 = [90,91,92,93,94,95];
-boat_range0 = [9999999];
+boat_range0 = [10,11,12,13];
 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug0,target_ID0, speed0, rate0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0);
-
+[debug0,target_ID0, speed0, rate0, dist_target0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,dist_old0,head_offset0)
+dist_old0 = dist_target0;
 if isempty(debug0) == 0
      %---------------------- Turn Rate Controller ----------------------------
         imu0 = receive(sand0_imu_sub);
@@ -193,40 +199,41 @@ sand1_head = [sand1_head_fr, sand1_head_fl, sand1_head_sr,...
         sand1_head_sl, sand1_head_rr, sand1_head_rl];
 
 % Specify Range of Target and Boat IDs
-% target_range1 = [90,91,92,93,94,95];
-% boat_range1 = [ 0, 1, 2, 3];
+target_range1 = [90,91,92,93,94,95];
+boat_range1 = [ 0, 1, 2, 3];
 
-target_range1 = [ 0, 1, 2, 3];
-boat_range1 = [9999999];
+% target_range1 = [ 0, 1, 2, 3];
+% boat_range1 = [9999999];
                 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug1,target_ID1, speed1, rate1] = vbap_test(sand1_tagID, sand1_dist, sand1_head,target_range1,boat_range1)
+[debug1,target_ID1, speed1, rate1, dist_target1] = vbap_test(sand1_tagID, sand1_dist, sand1_head,target_range1,boat_range1,dist_old1,head_offset1)
+dist_old1 = dist_target1;
 
 if isempty(debug1) == 0
 %---------------------- Turn Rate Controller ----------------------------
         imu1 = receive(sand1_imu_sub);
-        imu1_rate = rad2deg(imu1.AngularVelocity.Z)
-        rate_err1 = (rate1 - imu1_rate)
-        rate_err_cum1 = rate_err_cum1+ 0.5*(rate_err1 + rate_err_old1)*0.1
-        turn1 = K_p*rate_err1 + K_i*rate_err_cum1
+        imu1_rate = rad2deg(imu1.AngularVelocity.Z);
+        rate_err1 = (rate1 - imu1_rate);
+        rate_err_cum1 = rate_err_cum1+ 0.5*(rate_err1 + rate_err_old1)*0.1;
+        turn1 = K_p*rate_err1 + K_i*rate_err_cum1;
         left_thrust1 = -turn1;
         right_thrust1 = turn1;
 
         % Update old error
         rate_err_old1 = rate_err1;
 
-    fwd1 = sandwich_speed(speed1)
-    sand1_left = min(max_thrust, max(-max_thrust,fwd1 + left_thrust1))
-    sand1_right = min(max_thrust, max(-max_thrust,fwd1 + right_thrust1))
+    fwd1 = sandwich_speed(speed1);
+    sand1_left = min(max_thrust, max(-max_thrust,fwd1 + left_thrust1));
+    sand1_right = min(max_thrust, max(-max_thrust,fwd1 + right_thrust1));
     sandwich_1_left_msg.Data = sand1_left;
     sandwich_1_right_msg.Data = sand1_right;
     send(sandwich_1_left_pub, sandwich_1_left_msg);
     send(sandwich_1_right_pub, sandwich_1_right_msg);
 else
-%     sandwich_1_left_msg.Data = 0;
-%     sandwich_1_right_msg.Data = 0;
-%     send(sandwich_1_left_pub, sandwich_1_left_msg);
-%     send(sandwich_1_right_pub, sandwich_1_right_msg);
+    sandwich_1_left_msg.Data = 0;
+    sandwich_1_right_msg.Data = 0;
+    send(sandwich_1_left_pub, sandwich_1_left_msg);
+    send(sandwich_1_right_pub, sandwich_1_right_msg);
 end
 
 waitfor(rate);
