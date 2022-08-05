@@ -51,7 +51,7 @@ end
 % Spring dmin, dmax, ko
 dmin = 15;
 dmax = 30;
-ko = -0.075;
+ko = -0.1;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -94,7 +94,7 @@ turn_boat = sum(turn_boat);
 val=abs(psi_target);
 
 if val > 30
-    turn_target = 1;
+    turn_target = 1.5; % 1.0
 elseif val <=30 && val>5
     turn_target = 0.04*val - 0.2;
 else

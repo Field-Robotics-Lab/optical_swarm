@@ -42,6 +42,11 @@ sand2_side_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/side_l
 sand2_rear_right_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
 sand2_rear_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
 
+% ----------------P3D Subscribers-----------------------
+
+% sand0_nav_sub = rossubscriber('/robot0/sandwich_0/sensors/p3d','nav_msgs/Odometry','dataformat','struct');
+% sand1_nav_sub = rossubscriber('/robot1/sandwich_1/sensors/p3d','nav_msgs/Odometry','dataformat','struct');
+% sand2_nav_sub = rossubscriber('/robot2/sandwich_2/sensors/p3d','nav_msgs/Odometry','dataformat','struct');
 
 % ---------- Thrust Command Publishers ----------------------------
 
@@ -92,11 +97,19 @@ sand2_rear_right_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/
 sand2_rear_left_xform = getTransform(tftree,'sandwich_2/base_link','sandwich_2/rear_left_camera_link_optical','Timeout',inf);    
 
 
-
+% figure(1)
+% grid on
+% hold on
+% axis([-700 -300 150 400])
 
 while true
 
 %---------------------- Boat 0 ----------------------------
+% sand0_nav = receive(sand0_nav_sub,inf);
+% sand0_X = sand0_nav.Pose.Pose.Position.X;
+% sand0_Y = sand0_nav.Pose.Pose.Position.Y;
+% % figure(1)
+% plot(sand0_X,sand0_Y,'b*','MarkerSize',2)
 
 %--------------Receive Tag Detection Message -------------
 sand0_front_right = receive(sand0_front_right_sub,inf);
@@ -152,6 +165,13 @@ else
 end
 
 % -------------------- Boat 1 -------------------------
+
+% sand1_nav = receive(sand1_nav_sub,inf);
+% sand1_X = sand1_nav.Pose.Pose.Position.X;
+% sand1_Y = sand1_nav.Pose.Pose.Position.Y;
+% % figure(1)
+% plot(sand1_X,sand1_Y,'r*','MarkerSize',2)
+
 %--------------Receive Tag Detection Message -------------
 sand1_front_right = receive(sand1_front_right_sub,inf);
 sand1_front_left = receive(sand1_front_left_sub,inf);
@@ -208,6 +228,12 @@ else
 end
 
 % ------------------------ Boat 2 -------------------------
+
+% sand2_nav = receive(sand2_nav_sub,inf);
+% sand2_X = sand2_nav.Pose.Pose.Position.X;
+% sand2_Y = sand2_nav.Pose.Pose.Position.Y;
+% % figure(1)
+% plot(sand2_X,sand2_Y,'g*','MarkerSize',2)
 %--------------Receive Tag Detection Message -------------
 sand2_front_right = receive(sand2_front_right_sub,inf);
 sand2_front_left = receive(sand2_front_left_sub,inf);

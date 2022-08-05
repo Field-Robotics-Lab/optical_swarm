@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Gazebo world to load -->
+  <arg name="world" default="$(find vrx_gazebo)/worlds/sydneyregatta.world" />
+  <!-- If true, run gazebo GUI -->
+  <arg name="gui" default="true" />
+  <!-- If true, run gazebo in verbose mode -->
+  <arg name="verbose" default="false"/>
+  <!-- If true, start in paused state -->
+  <arg name="paused"  default="false"/>
+  <!-- Start in a default namespace -->
+  <arg name="namespace" default="sandwich_0"/>
+  <!-- Set robot name for group model -->
+  <arg name="robot_name" default="sandwich_0"/>
+  <!-- Lock robot in place on start -->
+  <arg name="robot_locked" default="false" />
+  <!-- Control robot with joystick -->
+  <arg name="joy" default="true"/>
+  
+
+  <!-- Start Gazebo with the world file -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name"   value="$(arg world)"/>
+    <arg name="verbose"      value="$(arg verbose)"/>
+    <arg name="paused"       value="$(arg paused)"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui"          value="$(arg gui)" />
+  </include>
+
+ <group ns="robot0">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
+      <arg name="x" value="-900"/>
+      <arg name="y" value="450"/>
+      <arg name="z" value="0"/>
+      <arg name="P" value="0"/>
+      <arg name="R" value="0"/>
+      <arg name="Y" value="0"/>
+      <arg name="robot_locked" value="false"/>
+      <arg name="namespace" value="sandwich_0"/>
+      <arg name="robot_name" value="sandwich_0"/>
+      <arg name="front_ID" value="00"/>
+      <arg name="back_ID" value="01"/>
+      <arg name="left_ID" value="02"/>
+      <arg name="right_ID" value="03"/>
+     </include>
+     <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher" > 
+	  <remap from="robot_description" to="/robot0/sandwich_0/robot_description" />     
+     </node>
+         
+  </group>
+
+          
+</launch>
+
+
