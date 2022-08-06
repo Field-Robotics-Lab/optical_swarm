@@ -46,6 +46,7 @@ dist_net = dist_target-follow_dist;
 
 % Spring dmin, dmax, ko
 d0 = 25;
+dmin = 20;
 dmax = 50;
 ko = 0.1;
 
@@ -63,9 +64,11 @@ for ii = 1:m
         boat_ID(ii,1:numel(boat_ind)) = ID(boat_ind);
         dist_boat(ii) = mean(dist(boat_ind));
         head_boat(ii) = mean(head(boat_ind));
-        if dist_boat(ii) < dmax
+        
+        if dist_boat(ii) <= dmax @@ dist_boat(ii) >= d0
          turn_boat(ii) = ko*(dist_boat(ii)-d0)*sign(head_boat(ii));
-
+         elseif dist_boat(ii) < dmin
+         turn_boat(ii) = -ko*sign(head_boat(ii))*(dist_boat(ii) - dmin)^2;
         else
         turn_boat(ii) = 0;
         end
