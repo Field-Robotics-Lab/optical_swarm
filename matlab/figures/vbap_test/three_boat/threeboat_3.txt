@@ -1,0 +1,39 @@
+Functions used:
+
+follow_control_test.m
+vbap_test.m
+
+Parameters:
+	follow_control_test.m
+	head_offset0 = 10;
+		head_offset2 = head_offset0;
+    head_offset1 = 0;
+ 		Add dynamic sign switching of heading offset if boat paths cross
+
+		% Gains
+		K_p = 0.1;
+		K_i = 0.01;
+	
+	vbap_test.m
+		follow_dist = 20;
+		% Spring dmin, dmax, ko
+		d0 = 25;
+		dmin = 20;
+		dmax = 50;
+****	ko = 0.05;
+	 Added quadratic repulsion for d < dmin
+		
+		% Speed and turn rate gains
+		Ku = 0.5; % 0.3
+		Kd = 0.1; % Derivative gain to avoid collision 0.02
+
+		Kr = 0.4; % 2
+
+		rel_vel = (dist_target - dist_old)/0.1;
+
+
+ 			Adjust rabbit waypoints so turn angles < 90*
+ 	 Fixed speed command calculation (previously multiplying by Ku twice)
+     Three boats, boat1 follows cube, boat0 and boat2 follow boat1
+
+***** Lowered spring constant, boats collided and then could not perceive each other to restore spacing

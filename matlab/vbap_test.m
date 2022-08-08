@@ -57,7 +57,7 @@ dist_net = dist_target-follow_dist;
 d0 = 25;
 dmin = 20;
 dmax = 50;
-ko = 0.1;
+ko = 0.05;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -79,7 +79,7 @@ for ii = 1:m
         dist_boat(ii) = mean(dist(boat_ind));
         head_boat(ii) = mean(head(boat_ind));
         
-        if dist_boat(ii) <= dmax @@ dist_boat(ii) >= d0
+        if dist_boat(ii) <= dmax && dist_boat(ii) >= d0
          turn_boat(ii) = ko*(dist_boat(ii)-d0)*sign(head_boat(ii));
          elseif dist_boat(ii) < dmin
          turn_boat(ii) = -ko*sign(head_boat(ii))*(dist_boat(ii) - dmin)^2;
