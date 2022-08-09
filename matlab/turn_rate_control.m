@@ -32,7 +32,7 @@ sandwich_0_right_msg = rosmessage(sandwich_0_right_pub);
 figure(3)
 grid on
 hold on
-axis([0 200 -15 15])
+axis([0 50 -35 35])
 title('Turn Rate Control')
 ylabel('Turn Rate [deg/s]')
 
@@ -44,13 +44,13 @@ iter = 0;
 rate_err_cum = 0;
 rate_err_old = 0;
 rate_err1 = 0;
-rate_cmd = 12;
+rate_cmd = -15;
 thrust = 0;
 max_thrust = 1;
 % Gains
-K_p = 1;
-K_i = 0.1;
-
+K_p = 0.5;
+K_i = 0.02;
+fwd = 0;
 
 while true
 
@@ -77,9 +77,10 @@ right_thrust = min(max_thrust, max(-max_thrust,thrust))
  send(sandwich_0_left_pub, sandwich_0_left_msg);
  send(sandwich_0_right_pub, sandwich_0_right_msg);
 
+figure(3)
+plot(iter,turn_rate,'r*','MarkerSize',4);
 
-
-
+iter = iter + 1;
 
 waitfor(rate);
 end

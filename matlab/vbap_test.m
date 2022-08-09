@@ -57,10 +57,11 @@ dist_net = max(0,(dist_target-follow_dist));
 % Distance and heading to partner vessels
 
 % Spring dmin, d0, dmax, ko
-d0 = 30;
-dmin = 20;
+d0 = 35;
+dmin = 25;
 dmax = 50;
-ko = 0.25;
+ko = 0.1;
+k2 = 0.75;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -85,7 +86,7 @@ for ii = 1:m
         if dist_boat(ii) <= dmax && dist_boat(ii) >= d0
          turn_boat(ii) = ko*(dist_boat(ii)-d0)*sign(head_boat(ii));
          elseif dist_boat(ii) < dmin
-         turn_boat(ii) = -ko*sign(head_boat(ii))*(dist_boat(ii) - dmin)^2;
+         turn_boat(ii) = k2*sign(head_boat(ii))*(dist_boat(ii) - dmin);
         else
         turn_boat(ii) = 0;
         end
