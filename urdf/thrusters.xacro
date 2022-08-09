@@ -98,7 +98,7 @@
       <plugin name="sandwich_gazebo_thrust" filename="libusv_gazebo_thrust_plugin.so">
         <cmdTimeout>1.0</cmdTimeout>
         <robotNamespace>${namespace}</robotNamespace>
-        <xacro:include filename="$(find sandwich_description)/urdf/sandwich_thruster_config.xacro" />
+        <xacro:include filename="$(find optical_swarm)/urdf/sandwich_thruster_config.xacro" />
         <!-- Angle must be disabled for VORC -->
         <xacro:sandwich_thruster_config name="left"/>
         <xacro:sandwich_thruster_config name="right"/>

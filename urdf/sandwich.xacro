@@ -9,7 +9,7 @@
 
 
   <!-- Include macros for dynamics plugins -->
-  <xacro:include filename="$(find sandwich_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find optical_swarm)/urdf/macros.xacro" />
 
   <!-- Attach hydrodynamics plugin -->
   <xacro:usv_dynamics_gazebo name="sandwich_dynamics_plugin" namespace="$(arg namespace)"/>

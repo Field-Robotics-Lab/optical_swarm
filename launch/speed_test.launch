@@ -7,7 +7,7 @@
   <!-- If true, run gazebo in verbose mode -->
   <arg name="verbose" default="false"/>
   <!-- If true, start in paused state -->
-  <arg name="paused"  default="false"/>
+  <arg name="paused"  default="true"/>
   <!-- Start in a default namespace -->
   <arg name="namespace" default="sandwich_0"/>
   <!-- Set robot name for group model -->
@@ -29,12 +29,12 @@
 
  <group ns="robot0">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-512"/>
-      <arg name="y" value="162"/>
+      <arg name="x" value="-1010"/>
+      <arg name="y" value="-615"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
-      <arg name="Y" value="1"/>
+      <arg name="Y" value="0"/>
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_0"/>
       <arg name="robot_name" value="sandwich_0"/>
@@ -52,12 +52,12 @@
 
 <group ns="robot1">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-532"/>
-      <arg name="y" value="165"/>
+      <arg name="x" value="-980"/>
+      <arg name="y" value="-600"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
-      <arg name="Y" value="1"/>
+      <arg name="Y" value="0"/>
       <arg name="robot_locked" value="false"/>
       <arg name="namespace" value="sandwich_1"/>
       <arg name="robot_name" value="sandwich_1"/>
@@ -74,6 +74,30 @@
     
   </group>
   
+  <group ns="robot2">
+    <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
+      <arg name="x" value="-1010"/>
+      <arg name="y" value="-585"/>
+      <arg name="z" value="0"/>
+      <arg name="P" value="0"/>
+      <arg name="R" value="0"/>
+      <arg name="Y" value="0"/>
+      <arg name="robot_locked" value="false"/>
+      <arg name="namespace" value="sandwich_2"/>
+      <arg name="robot_name" value="sandwich_2"/>
+      <arg name="front_ID" value="20"/>
+      <arg name="back_ID" value="21"/>
+      <arg name="left_ID" value="22"/>
+      <arg name="right_ID" value="23"/>
+
+    </include>
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+	  name="robot_state_publisher" >
+	  <remap from="robot_description" to="/robot2/sandwich_2/robot_description" />
+    </node>
+    
+  </group>
+  
   
  <include file="$(find optical_swarm)/launch/detection_trial.launch">
   </include>
@@ -82,6 +106,10 @@
     <arg name="robot_name"   value="/robot1/sandwich_1"/>
   </include>
   
+  <include file="$(find optical_swarm)/launch/detection_trial.launch">
+    <arg name="robot_name"   value="/robot2/sandwich_2"/>
+  </include>   
+  
         <!-- Rabbit Visualization:Spawn a visual model to serve as marker -->
   <group ns="april_cube">     
   <param name="april_description" 
@@ -89,7 +117,7 @@
      
         
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param april_description -x -530 -y 200 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
+        args="-urdf -param april_description -x -960 -y -600 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
               
               <!-- Convert PointStamped messages to model states -->
   <node name="pointstamped2modelstate" pkg="optical_swarm"
@@ -100,8 +128,8 @@
   
   <node pkg="optical_swarm" type="rabbit.py" name="april_cube">
     <param name="update_rate" type="double" value="10"/>
-    <param name="velocity" type="double" value="2.5"/>
-    <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_sydney.yaml" />
+    <param name="velocity" type="double" value="4"/>
+    <rosparam file="$(find optical_swarm)/config/rabbit_waypoints_speed_test.yaml" />
     
   </node>  
   <node pkg="robot_state_publisher" type="robot_state_publisher"
