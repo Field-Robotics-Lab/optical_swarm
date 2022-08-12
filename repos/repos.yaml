@@ -14,7 +14,7 @@ repositories:
   vrx:
     type: git
     url: git@github.com:osrf/vrx.git
-    version: master
+    version: vorc-dev
   geonav_transform:
     type: git
     url: git@github.com:bsb808/geonav_transform.git
