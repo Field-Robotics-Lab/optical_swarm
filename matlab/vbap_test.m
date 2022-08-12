@@ -57,9 +57,9 @@ dist_net = max(0,(dist_target-follow_dist));
 % Distance and heading to partner vessels
 
 % Spring dmin, d0, dmax, ko
-d0 = 35;
-dmin = 25;
-dmax = 50;
+d0 = 50;
+dmin = 40;
+dmax = 60;
 ko = 0.1;
 k2 = 0.75;
 

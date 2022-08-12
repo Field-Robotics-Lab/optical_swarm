@@ -48,8 +48,8 @@ rate_cmd = -15;
 thrust = 0;
 max_thrust = 1;
 % Gains
-K_p = 0.5;
-K_i = 0.02;
+K_p = 0.1;
+K_i = 0.01;
 fwd = 0;
 
 while true

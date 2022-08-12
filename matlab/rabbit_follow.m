@@ -29,12 +29,12 @@ end
 
 
 % Max speed and turn rate
-max_speed = 15.5;
+max_speed = 10;
 max_rate = 30; % 22
 
 % Speed and turn rate gains
-Ku = 0.6; % 0.3
-Kr = 0.4; % 2
+Ku = 0.4; % 0.3
+Kr = 0.3; % 2
 
 
 speed_cmd = Ku*dist_err;

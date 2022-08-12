@@ -105,39 +105,47 @@ head_offset2 = head_offset0;
 
 % Gains
 K_p = 0.1;
-K_i = 0.01;
+K_i = 0.00;
 
 % Max thrust value
 max_thrust = 1.0;
-
+iter = 0;
 while true
 
 %---------------------- Boat 0 ----------------------------
 %--------------Receive Tag Detection Message -------------
-sand0_front_right = receive(sand0_front_right_sub,inf);
+iter
+tic
+try
+sand0_front_right = receive(sand0_front_right_sub,.01);
 sand0_front_left = receive(sand0_front_left_sub,inf);
 sand0_side_right = receive(sand0_side_right_sub,inf);
 sand0_side_left = receive(sand0_side_left_sub,inf);
 sand0_rear_right = receive(sand0_rear_right_sub,inf);
 sand0_rear_left = receive(sand0_rear_left_sub,inf);
-
+catch
+end
+toc
 %------------- Extract  all ID and XYZ (Camera Frame) ------------
+tic
 [sand0_ID_fr,sand0_pose_fr] = tag_detect(sand0_front_right);
 [sand0_ID_fl,sand0_pose_fl] = tag_detect(sand0_front_left);
 [sand0_ID_sr,sand0_pose_sr] = tag_detect(sand0_side_right);
 [sand0_ID_sl,sand0_pose_sl] = tag_detect(sand0_side_left);
 [sand0_ID_rr,sand0_pose_rr] = tag_detect(sand0_rear_right);
 [sand0_ID_rl,sand0_pose_rl] = tag_detect(sand0_rear_left);
-
+toc
 %------------- Convert to Distance/Heading (Body Frame) ------------------
+tic
 [sand0_tagID_fr,sand0_dist_fr,sand0_head_fr] = tag_disthead(sand0_ID_fr,sand0_pose_fr,sand0_front_right_xform);
 [sand0_tagID_fl,sand0_dist_fl,sand0_head_fl] = tag_disthead(sand0_ID_fl,sand0_pose_fl,sand0_front_left_xform);
 [sand0_tagID_sr,sand0_dist_sr,sand0_head_sr] = tag_disthead(sand0_ID_sr,sand0_pose_sr,sand0_side_right_xform);
 [sand0_tagID_sl,sand0_dist_sl,sand0_head_sl] = tag_disthead(sand0_ID_sl,sand0_pose_sl,sand0_side_left_xform);
 [sand0_tagID_rr,sand0_dist_rr,sand0_head_rr] = tag_disthead(sand0_ID_rr,sand0_pose_rr,sand0_rear_right_xform);
 [sand0_tagID_rl,sand0_dist_rl,sand0_head_rl] = tag_disthead(sand0_ID_rl,sand0_pose_rl,sand0_rear_left_xform);
-
+toc
 %-------------- Consolidate Camera Outputs -----------------------
+tic
 sand0_tagID = [sand0_tagID_fr, sand0_tagID_fl, sand0_tagID_sr, ...
          sand0_tagID_sl, sand0_tagID_rr, sand0_tagID_rl];
 sand0_dist = [sand0_dist_fr, sand0_dist_fl, sand0_dist_sr,...
@@ -153,8 +161,11 @@ target_range0 = [10,11,12,13];
 boat_range0 = [20,21,22,23];
 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug0,target_ID0, speed0, rate0, dist_target0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,dist_old0,head_offset0)
+[debug0,target_ID0, speed0, rate0, dist_target0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,dist_old0,head_offset0);
 dist_old0 = dist_target0;
+toc
+
+tic
 if isempty(debug0) == 0
      %---------------------- Turn Rate Controller ----------------------------
         imu0 = receive(sand0_imu_sub);
@@ -174,18 +185,20 @@ if isempty(debug0) == 0
     sand0_right = min(max_thrust, max(-max_thrust,fwd0 + right_thrust0));
     sandwich_0_left_msg.Data = sand0_left;
     sandwich_0_right_msg.Data = sand0_right;
-    send(sandwich_0_left_pub, sandwich_0_left_msg);
-    send(sandwich_0_right_pub, sandwich_0_right_msg);
+%     send(sandwich_0_left_pub, sandwich_0_left_msg);
+%     send(sandwich_0_right_pub, sandwich_0_right_msg);
 else
 %     sandwich_0_left_msg.Data = 0;
 %     sandwich_0_right_msg.Data = 0;
 %     send(sandwich_0_left_pub, sandwich_0_left_msg);
 %     send(sandwich_0_right_pub, sandwich_0_right_msg);
 end
+toc
 
 % -------------------- Boat 1 -------------------------
 
 %--------------Receive Tag Detection Message -------------
+tic
 sand1 = receive(sand1_nav_sub,inf);
 rabbit = receive(rabbit_sub,inf);
 
@@ -218,34 +231,43 @@ rabbit = receive(rabbit_sub,inf);
 %     send(sandwich_1_left_pub, sandwich_1_left_msg);
 %     send(sandwich_1_right_pub, sandwich_1_right_msg);
 % end
+toc
 
 % -------------------- Boat 2 -------------------------
 
 %--------------Receive Tag Detection Message -------------
-sand2_front_right = receive(sand2_front_right_sub,inf);
+tic
+try
+sand2_front_right = receive(sand2_front_right_sub,.01);
 sand2_front_left = receive(sand2_front_left_sub,inf);
 sand2_side_right = receive(sand2_side_right_sub,inf);
 sand2_side_left = receive(sand2_side_left_sub,inf);
 sand2_rear_right = receive(sand2_rear_right_sub,inf);
 sand2_rear_left = receive(sand2_rear_left_sub,inf);
+catch
+end
+toc
 
 %------------- Extract  all ID and XYZ (Camera Frame) ------------
+tic
 [sand2_ID_fr,sand2_pose_fr] = tag_detect(sand2_front_right);
 [sand2_ID_fl,sand2_pose_fl] = tag_detect(sand2_front_left);
 [sand2_ID_sr,sand2_pose_sr] = tag_detect(sand2_side_right);
 [sand2_ID_sl,sand2_pose_sl] = tag_detect(sand2_side_left);
 [sand2_ID_rr,sand2_pose_rr] = tag_detect(sand2_rear_right);
 [sand2_ID_rl,sand2_pose_rl] = tag_detect(sand2_rear_left);
-
+toc
 %------------- Convert to Distance/Heading (Body Frame) ------------------
+tic
 [sand2_tagID_fr,sand2_dist_fr,sand2_head_fr] = tag_disthead(sand2_ID_fr,sand2_pose_fr,sand2_front_right_xform);
 [sand2_tagID_fl,sand2_dist_fl,sand2_head_fl] = tag_disthead(sand2_ID_fl,sand2_pose_fl,sand2_front_left_xform);
 [sand2_tagID_sr,sand2_dist_sr,sand2_head_sr] = tag_disthead(sand2_ID_sr,sand2_pose_sr,sand2_side_right_xform);
 [sand2_tagID_sl,sand2_dist_sl,sand2_head_sl] = tag_disthead(sand2_ID_sl,sand2_pose_sl,sand2_side_left_xform);
 [sand2_tagID_rr,sand2_dist_rr,sand2_head_rr] = tag_disthead(sand2_ID_rr,sand2_pose_rr,sand2_rear_right_xform);
 [sand2_tagID_rl,sand2_dist_rl,sand2_head_rl] = tag_disthead(sand2_ID_rl,sand2_pose_rl,sand2_rear_left_xform);
-
+toc
 %-------------- Consolidate Camera Outputs -----------------------
+tic
 sand2_tagID = [sand2_tagID_fr, sand2_tagID_fl, sand2_tagID_sr, ...
          sand2_tagID_sl, sand2_tagID_rr, sand2_tagID_rl];
 sand2_dist = [sand2_dist_fr, sand2_dist_fl, sand2_dist_sr,...
@@ -261,8 +283,10 @@ target_range2 = [10,11,12,13];
 boat_range2 = [0, 1, 2, 3];
                 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug2,target_ID2, speed2, rate2, dist_target2] = vbap_test(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,dist_old2,head_offset2)
+[debug2,target_ID2, speed2, rate2, dist_target2] = vbap_test(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,dist_old2,head_offset2);
 dist_old2 = dist_target2;
+toc
+tic
 
 if isempty(debug2) == 0
 %---------------------- Turn Rate Controller ----------------------------
@@ -282,14 +306,15 @@ if isempty(debug2) == 0
     sand2_right = min(max_thrust, max(-max_thrust,fwd2 + right_thrust2));
     sandwich_2_left_msg.Data = sand2_left;
     sandwich_2_right_msg.Data = sand2_right;
-    send(sandwich_2_left_pub, sandwich_2_left_msg);
-    send(sandwich_2_right_pub, sandwich_2_right_msg);
+%     send(sandwich_2_left_pub, sandwich_2_left_msg);
+%     send(sandwich_2_right_pub, sandwich_2_right_msg);
 else
 %     sandwich_2_left_msg.Data = 0;
 %     sandwich_2_right_msg.Data = 0;
 %     send(sandwich_2_left_pub, sandwich_2_left_msg);
 %     send(sandwich_2_right_pub, sandwich_2_right_msg);
 end
-
-waitfor(rate);
+toc
+iter = iter +1;
+% waitfor(rate);
 end
