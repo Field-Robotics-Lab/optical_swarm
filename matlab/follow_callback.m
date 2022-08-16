@@ -1,6 +1,24 @@
 close all
 clear
 
+
+% Declare global variables for tag detection
+global sand0_front_right; 
+global sand0_front_left; 
+global sand0_side_right; 
+global sand0_side_left; 
+global sand0_rear_right;
+global sand0_rear_left; 
+
+global sand2_front_right; 
+global sand2_front_left; 
+global sand2_side_right; 
+global sand2_side_left; 
+global sand2_rear_right; 
+global sand2_rear_left;
+
+
+
 try
     rosinit
 catch
@@ -17,12 +35,22 @@ rate = rateControl(desiredRate);
 
 %---------------------- Boat 0 ----------------------------
 
-sand0_front_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand0_front_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand0_side_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/side_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand0_side_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/side_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand0_rear_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/rear_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand0_rear_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/rear_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
+sand0_front_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_front_right_callback,'DataFormat','struct');
+sand0_front_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_front_left_callback,'DataFormat','struct');
+sand0_side_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/side_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_side_right_callback,'DataFormat','struct');
+sand0_side_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/side_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_side_left_callback,'DataFormat','struct');
+sand0_rear_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/rear_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_rear_right_callback,'DataFormat','struct');
+sand0_rear_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/rear_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_rear_left_callback,'DataFormat','struct');
+
+
+sand0_front_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand0_front_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand0_side_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand0_side_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand0_rear_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand0_rear_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
+
+
 
 % -------------------- Boat 1 ---------------------------------------
 
@@ -31,13 +59,20 @@ rabbit_sub = rossubscriber('/april_cube/rabbit','DataFormat','struct');
 
 % ------------------- Boat 2 ---------------------------------------------
 
-sand2_front_right_sub = rossubscriber('/robot2/sandwich_2/sensors/cameras/front_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand2_front_left_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/front_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand2_side_right_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/side_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand2_side_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/side_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand2_rear_right_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
-sand2_rear_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray','DataFormat','struct');
+sand2_front_right_sub = rossubscriber('/robot2/sandwich_2/sensors/cameras/front_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_front_right_callback,'DataFormat','struct');
+sand2_front_left_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/front_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_front_left_callback,'DataFormat','struct');
+sand2_side_right_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/side_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_side_right_callback,'DataFormat','struct');
+sand2_side_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/side_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_side_left_callback,'DataFormat','struct');
+sand2_rear_right_sub =  rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_rear_right_callback,'DataFormat','struct');
+sand2_rear_left_sub =   rossubscriber('/robot2/sandwich_2/sensors/cameras/rear_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand2_rear_left_callback,'DataFormat','struct');
 
+
+sand2_front_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand2_front_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand2_side_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand2_side_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand2_rear_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
+sand2_rear_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
 
 % ---------- Thrust Command Publishers ----------------------------
 
@@ -87,12 +122,6 @@ while true
 %--------------Receive Tag Detection Message -------------
 iter
 tic
-sand0_front_right = receive(sand0_front_right_sub,inf);
-sand0_front_left = receive(sand0_front_left_sub,inf);
-sand0_side_right = receive(sand0_side_right_sub,inf);
-sand0_side_left = receive(sand0_side_left_sub,inf);
-sand0_rear_right = receive(sand0_rear_right_sub,inf);
-sand0_rear_left = receive(sand0_rear_left_sub,inf);
 
 %------------- Extract  all ID and XYZ (Camera Frame) ------------
 
@@ -129,7 +158,7 @@ target_range0 = [10,11,12,13];
 boat_range0 = [20,21,22,23];
 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug0,target_ID0, speed0, rate0, dist_target0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,head_offset0);
+[debug0,target_ID0, speed0, rate0, dist_target0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,head_offset0)
 
 % speed0
 % rate0
@@ -139,7 +168,7 @@ if isempty(debug0) == 0
      %---------------------- Turn Rate Controller ----------------------------
         sandwich_0_cmd_msg.Linear.X = speed0;
     sandwich_0_cmd_msg.Angular.Z = deg2rad(rate0);
-%     send(sandwich_0_cmd_pub, sandwich_0_cmd_msg);
+    send(sandwich_0_cmd_pub, sandwich_0_cmd_msg);
 else
 %     sandwich_0_left_msg.Data = 0;
 %     sandwich_0_right_msg.Data = 0;
@@ -168,12 +197,7 @@ rabbit = receive(rabbit_sub,inf);
 
 %--------------Receive Tag Detection Message -------------
 
-sand2_front_right = receive(sand2_front_right_sub,inf);
-sand2_front_left = receive(sand2_front_left_sub,inf);
-sand2_side_right = receive(sand2_side_right_sub,inf);
-sand2_side_left = receive(sand2_side_left_sub,inf);
-sand2_rear_right = receive(sand2_rear_right_sub,inf);
-sand2_rear_left = receive(sand2_rear_left_sub,inf);
+
 
 
 %------------- Extract  all ID and XYZ (Camera Frame) ------------
@@ -211,10 +235,9 @@ target_range2 = [10,11,12,13];
 boat_range2 = [0, 1, 2, 3];
                 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug2,target_ID2, speed2, rate2, dist_target2] = vbap_test(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,head_offset2);
-speed2
-rate2
-
+[debug2,target_ID2, speed2, rate2, dist_target2] = vbap_test(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,head_offset2)
+speed2;
+rate2;
 
 if isempty(debug2) == 0
 %---------------------- Turn Rate Controller ----------------------------

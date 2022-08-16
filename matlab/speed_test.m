@@ -23,10 +23,9 @@ sand2_imu_sub = rossubscriber('/robot2/sandwich_2/sensors/imu/imu/data');
 
 % ---------- Thrust Command Publishers ----------------------------
 
-sandwich_2_left_pub = rospublisher('/sandwich_2/thrusters/left_thrust_cmd','std_msgs/Float32');
-sandwich_2_right_pub = rospublisher('/sandwich_2/thrusters/right_thrust_cmd','std_msgs/Float32');
-sandwich_2_left_msg = rosmessage(sandwich_2_left_pub);
-sandwich_2_right_msg = rosmessage(sandwich_2_right_pub);
+sandwich_2_cmd_pub = rospublisher('/sandwich_2/cmd_vel','geometry_msgs/Twist');
+sandwich_2_cmd_msg = rosmessage(sandwich_2_cmd_pub);
+
 
 
 % figure(1)
@@ -35,23 +34,22 @@ sandwich_2_right_msg = rosmessage(sandwich_2_right_pub);
 % axis([-1000 -600 -500 -300])
 % title('Position')
 
-left_thrust = 1;
-% right_thrust = left_thrust; 
-right_thrust = 0; 
+speed2 = 10;
+rate2 = 0;
 
-% figure(2)
-% grid on
-% hold on
-% axis([0 25 0 15])
-% title(sprintf('Thrust %0g',left_thrust))
-% ylabel('Speed')
-% xlabel('Time [sec]')
+figure(2)
+grid on
+hold on
+axis([0 25 0 15])
+title(sprintf('Speed %0g',speed2))
+ylabel('Speed')
+xlabel('Time [sec]')
 
 figure(3)
 grid on
 hold on
-axis([0 25 -25 25])
-title(sprintf('Fwd Turn, delta thrust = %0g',abs(left_thrust - right_thrust)))
+axis([0 25 -40 40])
+title(sprintf('Fwd Turn, rate = %0g',rate2))
 ylabel('Turn Rate [deg/s]')
 xlabel('Time [sec]')
 
@@ -65,27 +63,25 @@ while true
 %  figure(1)
 %  plot(sand2_X,sand2_Y,'b*','MarkerSize',4)
     
-%  sand2_U = sand2_nav.Twist.Twist.Linear.X;
-%  sand2_V = sand2_nav.Twist.Twist.Linear.Y;
-%  sand2_speed = norm([sand2_U sand2_V])
-% figure(2)
-%     plot(iter/10,sand2_speed,'r*','MarkerSize',4)
+ sand2_U = sand2_nav.Twist.Twist.Linear.X;
+ sand2_V = sand2_nav.Twist.Twist.Linear.Y;
+ sand2_speed = norm([sand2_U sand2_V])
+figure(2)
+    plot(iter/10,sand2_speed,'r*','MarkerSize',4)
 
 imu = receive(sand2_imu_sub);
-turn_rate = rad2deg(imu.AngularVelocity.Z)
+turn_rate = rad2deg(imu.AngularVelocity.Z);
 figure(3)
 plot(iter/10,turn_rate,'r*','MarkerSize',4)
 
-if iter < 150
- sandwich_2_left_msg.Data = left_thrust;
- sandwich_2_right_msg.Data = right_thrust;
- send(sandwich_2_left_pub, sandwich_2_left_msg);
- send(sandwich_2_right_pub, sandwich_2_right_msg);
+if iter < 100
+    sandwich_2_cmd_msg.Linear.X = speed2;
+    sandwich_2_cmd_msg.Angular.Z = deg2rad(rate2);
+    send(sandwich_2_cmd_pub, sandwich_2_cmd_msg);
 else
-sandwich_2_left_msg.Data = 0;
- sandwich_2_right_msg.Data = 0;
- send(sandwich_2_left_pub, sandwich_2_left_msg);
- send(sandwich_2_right_pub, sandwich_2_right_msg);
+sandwich_2_cmd_msg.Linear.X = speed2;
+    sandwich_2_cmd_msg.Angular.Z = 0;
+    send(sandwich_2_cmd_pub, sandwich_2_cmd_msg);
 end
 
 iter = iter+1;

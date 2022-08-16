@@ -1,4 +1,4 @@
-function [debug,target_ID,speed,rate,dist_target] = vbap_test(ID,dist,head,target_range,boat_range,dist_old,head_offset)
+function [debug,target_ID,speed,rate,dist_target] = vbap_test(ID,dist,head,target_range,boat_range,head_offset)
 % vbap_test implements a vehiche-body artificial potential field
 % to maintain inter-vehicle spacing while tracking an aprilCube target.
 % 
@@ -57,11 +57,11 @@ dist_net = max(0,(dist_target-follow_dist));
 % Distance and heading to partner vessels
 
 % Spring dmin, d0, dmax, ko
-d0 = 50;
-dmin = 40;
+d0 = 45;
+dmin = 35;
 dmax = 60;
 ko = 0.1;
-k2 = 0.75;
+k2 = 0.5;
 
 m = height(boat_range);
 n = length(boat_range);
@@ -102,16 +102,15 @@ turn_boat = sum(turn_boat);
 
 
 % Max speed and turn rate
-max_speed = 15.5;
+max_speed = 10;
 max_rate = 30; % 22
 
 % Speed and turn rate gains
 Ku = 0.7; % 0.3
-Kd = 0.0; % Derivative gain to avoid collision and provide better acceleration
 Kr = 0.4; % 2
 
-rel_vel = (dist_target - dist_old)/0.1; % using step size of 0.1 (10Hz)
-speed_cmd = Ku*dist_net + Kd*rel_vel;
+
+speed_cmd = Ku*dist_net;
 
 % Saturation 
 speed = min(max_speed,max(-max_speed,speed_cmd));

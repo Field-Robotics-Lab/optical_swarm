@@ -29,8 +29,8 @@
 
  <group ns="robot0">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-800"/>
-      <arg name="y" value="-385"/>
+      <arg name="x" value="-840"/>
+      <arg name="y" value="-485"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
@@ -47,13 +47,32 @@
 	  name="robot_state_publisher" > 
 	  <remap from="robot_description" to="/robot0/sandwich_0/robot_description" />     
      </node>
-         
+          
+          <node pkg="usv_control" type="usv_control_sandwich.py"
+  name="usv_control_sandwich" output="screen">
+    <!-- Set initial control gains -->
+    <!-- Yaw Rate -->
+    <param name="yawKp" value="20"/>
+    <param name="yawKi" value="5.0"/>
+    <param name="yawKd" value="1"/>
+
+    <!-- Use remap to connect generic controller to specific use-case -->
+    <remap from="cmd_vel" to="/sandwich_0/cmd_vel"/>
+    <remap from="imu/data" to="/robot0/sandwich_0/sensors/imu/imu/data"/>
+    <remap from="left_thrust_cmd"
+	   to="/sandwich_0/thrusters/left_thrust_cmd"/>
+    <remap from="right_thrust_cmd"
+	   to="/sandwich_0/thrusters/right_thrust_cmd"/>
+    <remap from="yaw_pid_debug" to="sandwich_0/control/yaw_pid_debug"/>
+    
+  </node>
+  
   </group>
 
 <group ns="robot1">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-780"/>
-      <arg name="y" value="-600"/>
+      <arg name="x" value="-820"/>
+      <arg name="y" value="-500"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
@@ -72,12 +91,31 @@
 	  <remap from="robot_description" to="/robot1/sandwich_1/robot_description" />
     </node>
     
+     <node pkg="usv_control" type="usv_control_sandwich.py"
+  name="usv_control_sandwich" output="screen">
+    <!-- Set initial control gains -->
+    <!-- Yaw Rate -->
+    <param name="yawKp" value="20"/>
+    <param name="yawKi" value="5.0"/>
+    <param name="yawKd" value="1"/>
+
+    <!-- Use remap to connect generic controller to specific use-case -->
+    <remap from="cmd_vel" to="/sandwich_1/cmd_vel"/>
+    <remap from="imu/data" to="/robot1/sandwich_1/sensors/imu/imu/data"/>
+    <remap from="left_thrust_cmd"
+	   to="/sandwich_1/thrusters/left_thrust_cmd"/>
+    <remap from="right_thrust_cmd"
+	   to="/sandwich_1/thrusters/right_thrust_cmd"/>
+    <remap from="yaw_pid_debug" to="sandwich_1/control/yaw_pid_debug"/>
+    
+  </node>
+  
   </group>
   
   <group ns="robot2">
     <include file="$(find optical_swarm)/launch/sandwich_multi.launch">
-      <arg name="x" value="-800"/>
-      <arg name="y" value="-415"/>
+      <arg name="x" value="-840"/>
+      <arg name="y" value="-515"/>
       <arg name="z" value="0"/>
       <arg name="P" value="0"/>
       <arg name="R" value="0"/>
@@ -96,6 +134,26 @@
 	  <remap from="robot_description" to="/robot2/sandwich_2/robot_description" />
     </node>
     
+  
+  
+     <node pkg="usv_control" type="usv_control_sandwich.py"
+  name="usv_control_sandwich" output="screen">
+    
+    <param name="yawKp" value="20"/>
+    <param name="yawKi" value="5.0"/>
+    <param name="yawKd" value="1"/>
+
+    
+    <remap from="cmd_vel" to="/sandwich_2/cmd_vel"/>
+    <remap from="imu/data" to="/robot2/sandwich_2/sensors/imu/imu/data"/>
+    <remap from="left_thrust_cmd"
+	   to="/sandwich_2/thrusters/left_thrust_cmd"/>
+    <remap from="right_thrust_cmd"
+	   to="/sandwich_2/thrusters/right_thrust_cmd"/>
+    <remap from="yaw_pid_debug" to="sandwich_2/control/yaw_pid_debug"/>
+    
+  </node>
+  
   </group>
   
     <group if="$(arg joy)">
@@ -122,7 +180,7 @@
      
         
   <node name="spawn_rabbit" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param april_description -x -760 -y -400 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
+        args="-urdf -param april_description -x -800 -y -500 -z 1 -R 0 -P 0 -Y 0 -model april_cube"/>
               
               <!-- Convert PointStamped messages to model states -->
   <node name="pointstamped2modelstate" pkg="optical_swarm"

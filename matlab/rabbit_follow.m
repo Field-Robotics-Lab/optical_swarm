@@ -33,7 +33,7 @@ max_speed = 10;
 max_rate = 30; % 22
 
 % Speed and turn rate gains
-Ku = 0.4; % 0.3
+Ku = 1; % 0.3
 Kr = 0.3; % 2
 
 

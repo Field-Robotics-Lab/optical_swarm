@@ -1,0 +1,80 @@
+---------------------- Callback Line Tests------------------------
+
+For all tests below:
+
+yaw PID:
+	Kp = 20
+	Ki = 5
+	Kd = 1
+rabbit speed = 5
+
+initial spacing = 30 m
+following distance = 20 m
+
+Test 1:
+	Quadratic spring:
+		ko = 0.1
+		k2 = 0.2
+		dmin = 25
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.5
+		kr = 0.4
+		
+Test 2:
+	Linear Spring:
+		ko = 0.1
+		k2 = 0.4
+		dmin = 25
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.5
+		kr = 0.4
+		
+Test 3:
+	Linear Spring:
+		ko = 0.1
+		k2 = 0.5
+		dmin = 30
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.5
+		kr = 0.4
+		
+		
+Test 4:
+	Linear Spring:
+		ko = 0.1
+		k2 = 0.5
+		dmin = 35
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.5
+		kr = 0.4
+		
+Test 5:
+	Linear Spring:
+		ko = 0.1
+		k2 = 0.5
+		dmin = 35
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.7
+		kr = 0.4
+		
+----------------------------- Callback Octagon Tests -----------------------------
+Test 1:
+	Linear Spring:
+		ko = 0.1
+		k2 = 0.5
+		dmin = 35
+		d0 = 45
+		dmax = 60
+		
+		ku = 0.7
+		kr = 0.4
