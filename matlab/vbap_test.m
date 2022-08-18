@@ -1,4 +1,4 @@
-function [debug,target_ID,speed,rate,dist_target] = vbap_test(ID,dist,head,target_range,boat_range,head_offset)
+function [debug,target_ID,speed,rate,dist_target,int_err] = vbap_test(ID,dist,head,target_range,boat_range,err_old,dt)
 % vbap_test implements a vehiche-body artificial potential field
 % to maintain inter-vehicle spacing while tracking an aprilCube target.
 % 
@@ -48,9 +48,10 @@ dist_target = mean(dist_target);
 
 % If less than follow distance, send 0
 
-dist_net = max(0,(dist_target-follow_dist));
+dist_net = dist_target-follow_dist;
 
-
+int_err = err_old + dist_net*dt;
+int_err = min(100,max(-100,int_err));
 % Forward component of thrust commands: depends only on distance from
 % target
 
@@ -95,9 +96,9 @@ for ii = 1:m
     end
 
 end
-head_offset = head_offset*sign(sum(head_boat));
 
-turn_target=mean(head_target)-head_offset;
+
+turn_target=mean(head_target);
 turn_boat = sum(turn_boat);
 
 
@@ -106,11 +107,14 @@ max_speed = 10;
 max_rate = 30; % 22
 
 % Speed and turn rate gains
-Ku = 0.7; % 0.3
-Kr = 0.4; % 2
+Ku = 0.7; % 0.7
+Ki = 0.05; % 0.05
 
 
-speed_cmd = Ku*dist_net;
+Kr = 0.4; % 0.4
+
+
+speed_cmd = max(0,(Ku*dist_net + Ki*int_err));
 
 % Saturation 
 speed = min(max_speed,max(-max_speed,speed_cmd));
