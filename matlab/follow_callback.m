@@ -34,7 +34,6 @@ rate = rateControl(desiredRate);
 % --------------- Tag Detection Subscribers -----------------------------
 
 %---------------------- Boat 0 ----------------------------
-now = rostime("now");
 
 sand0_front_right_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_right_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_front_right_callback,'DataFormat','struct');
 sand0_front_left_sub = rossubscriber('/robot0/sandwich_0/sensors/cameras/front_left_camera/tag_detections','apriltag_ros/AprilTagDetectionArray',@sand0_front_left_callback,'DataFormat','struct');
@@ -50,7 +49,6 @@ sand0_side_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
 sand0_side_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
 sand0_rear_right = rosmessage('apriltag_ros/AprilTagDetectionArray');
 sand0_rear_left = rosmessage('apriltag_ros/AprilTagDetectionArray');
-
 
 
 % -------------------- Boat 1 ---------------------------------------
@@ -120,30 +118,19 @@ then = 0;
 iter = 0;
 while true
 
-%---------------------- Boat 0 ----------------------------
-%--------------Receive Tag Detection Message -------------
 iter
 now = rostime('now');
 now = now.Sec + now.Nsec*1e-09;
 dt = now - then;
 
-%------------- Extract  all ID and XYZ (Camera Frame) ------------
+%---------------------- Boat 0 ----------------------------
 
-[sand0_ID_fr,sand0_pose_fr] = tag_detect(sand0_front_right);
-[sand0_ID_fl,sand0_pose_fl] = tag_detect(sand0_front_left);
-[sand0_ID_sr,sand0_pose_sr] = tag_detect(sand0_side_right);
-[sand0_ID_sl,sand0_pose_sl] = tag_detect(sand0_side_left);
-[sand0_ID_rr,sand0_pose_rr] = tag_detect(sand0_rear_right);
-[sand0_ID_rl,sand0_pose_rl] = tag_detect(sand0_rear_left);
-
-%------------- Convert to Distance/Heading (Body Frame) ------------------
-
-[sand0_tagID_fr,sand0_dist_fr,sand0_head_fr] = tag_disthead(sand0_ID_fr,sand0_pose_fr,sand0_front_right_xform);
-[sand0_tagID_fl,sand0_dist_fl,sand0_head_fl] = tag_disthead(sand0_ID_fl,sand0_pose_fl,sand0_front_left_xform);
-[sand0_tagID_sr,sand0_dist_sr,sand0_head_sr] = tag_disthead(sand0_ID_sr,sand0_pose_sr,sand0_side_right_xform);
-[sand0_tagID_sl,sand0_dist_sl,sand0_head_sl] = tag_disthead(sand0_ID_sl,sand0_pose_sl,sand0_side_left_xform);
-[sand0_tagID_rr,sand0_dist_rr,sand0_head_rr] = tag_disthead(sand0_ID_rr,sand0_pose_rr,sand0_rear_right_xform);
-[sand0_tagID_rl,sand0_dist_rl,sand0_head_rl] = tag_disthead(sand0_ID_rl,sand0_pose_rl,sand0_rear_left_xform);
+[sand0_tagID_fr,sand0_dist_fr,sand0_head_fr] = tag_detect_2(sand0_front_right,sand0_front_right_xform);
+[sand0_tagID_fl,sand0_dist_fl,sand0_head_fl] = tag_detect_2(sand0_front_left,sand0_front_left_xform);
+[sand0_tagID_sr,sand0_dist_sr,sand0_head_sr] = tag_detect_2(sand0_side_right,sand0_side_right_xform);
+[sand0_tagID_sl,sand0_dist_sl,sand0_head_sl] = tag_detect_2(sand0_side_left,sand0_side_left_xform);
+[sand0_tagID_rr,sand0_dist_rr,sand0_head_rr] = tag_detect_2(sand0_rear_right,sand0_rear_right_xform);
+[sand0_tagID_rl,sand0_dist_rl,sand0_head_rl] = tag_detect_2(sand0_rear_left,sand0_rear_left_xform);
 
 %-------------- Consolidate Camera Outputs -----------------------
 
@@ -199,28 +186,12 @@ rabbit = receive(rabbit_sub,inf);
 
 % -------------------- Boat 2 -------------------------
 
-%--------------Receive Tag Detection Message -------------
-
-
-
-
-%------------- Extract  all ID and XYZ (Camera Frame) ------------
-
-[sand2_ID_fr,sand2_pose_fr] = tag_detect(sand2_front_right);
-[sand2_ID_fl,sand2_pose_fl] = tag_detect(sand2_front_left);
-[sand2_ID_sr,sand2_pose_sr] = tag_detect(sand2_side_right);
-[sand2_ID_sl,sand2_pose_sl] = tag_detect(sand2_side_left);
-[sand2_ID_rr,sand2_pose_rr] = tag_detect(sand2_rear_right);
-[sand2_ID_rl,sand2_pose_rl] = tag_detect(sand2_rear_left);
-
-%------------- Convert to Distance/Heading (Body Frame) ------------------
-
-[sand2_tagID_fr,sand2_dist_fr,sand2_head_fr] = tag_disthead(sand2_ID_fr,sand2_pose_fr,sand2_front_right_xform);
-[sand2_tagID_fl,sand2_dist_fl,sand2_head_fl] = tag_disthead(sand2_ID_fl,sand2_pose_fl,sand2_front_left_xform);
-[sand2_tagID_sr,sand2_dist_sr,sand2_head_sr] = tag_disthead(sand2_ID_sr,sand2_pose_sr,sand2_side_right_xform);
-[sand2_tagID_sl,sand2_dist_sl,sand2_head_sl] = tag_disthead(sand2_ID_sl,sand2_pose_sl,sand2_side_left_xform);
-[sand2_tagID_rr,sand2_dist_rr,sand2_head_rr] = tag_disthead(sand2_ID_rr,sand2_pose_rr,sand2_rear_right_xform);
-[sand2_tagID_rl,sand2_dist_rl,sand2_head_rl] = tag_disthead(sand2_ID_rl,sand2_pose_rl,sand2_rear_left_xform);
+[sand2_tagID_fr,sand2_dist_fr,sand2_head_fr] = tag_detect_2(sand2_front_right,sand2_front_right_xform);
+[sand2_tagID_fl,sand2_dist_fl,sand2_head_fl] = tag_detect_2(sand2_front_left,sand2_front_left_xform);
+[sand2_tagID_sr,sand2_dist_sr,sand2_head_sr] = tag_detect_2(sand2_side_right,sand2_side_right_xform);
+[sand2_tagID_sl,sand2_dist_sl,sand2_head_sl] = tag_detect_2(sand2_side_left,sand2_side_left_xform);
+[sand2_tagID_rr,sand2_dist_rr,sand2_head_rr] = tag_detect_2(sand2_rear_right,sand2_rear_right_xform);
+[sand2_tagID_rl,sand2_dist_rl,sand2_head_rl] = tag_detect_2(sand2_rear_left,sand2_rear_left_xform);
 
 %-------------- Consolidate Camera Outputs -----------------------
 

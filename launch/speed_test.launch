@@ -15,7 +15,7 @@
   <!-- Lock robot in place on start -->
   <arg name="robot_locked" default="false" />
   <!-- Control robot with joystick -->
-  <arg name="joy" default="true"/>
+  <arg name="joy" default="false"/>
   
 
   <!-- Start Gazebo with the world file -->

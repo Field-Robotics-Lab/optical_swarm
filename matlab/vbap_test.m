@@ -39,7 +39,7 @@ follow_dist = 20;
 if isempty(target_ind) == 1
    dist_target = follow_dist;
    head_target = 0;
-   head_offset = 0;
+   
 else
    dist_target = dist(target_ind);
    head_target = head(target_ind);
@@ -114,10 +114,10 @@ Ki = 0.05; % 0.05
 Kr = 0.4; % 0.4
 
 
-speed_cmd = max(0,(Ku*dist_net + Ki*int_err));
+% speed_cmd = max(0,(Ku*dist_net + Ki*int_err));
 
 % Saturation 
-speed = min(max_speed,max(-max_speed,speed_cmd));
+speed = min(max_speed,max(0,(Ku*dist_net + Ki*int_err)));
 rate = min(max_rate,max(-max_rate,Kr*turn_target + turn_boat));
     
 end
