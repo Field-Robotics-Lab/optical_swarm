@@ -27,9 +27,6 @@ catch
 end
 
 
-% ROS Calculation Rate
-desiredRate = 10; %10 hertz 
-rate = rateControl(desiredRate);
 
 % --------------- Tag Detection Subscribers -----------------------------
 
@@ -149,7 +146,7 @@ target_range0 = [10,11,12,13];
 boat_range0 = [20,21,22,23];
 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug0,target_ID0, speed0, rate0, dist_target0,err0] = vbap_test(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,dist_err_cum0,dt)
+[debug0,target_ID0, speed0, rate0, dist_target0,err0] = apriltag_vbap(sand0_tagID, sand0_dist, sand0_head,target_range0,boat_range0,dist_err_cum0,dt)
 dist_err_cum0 = err0;
 % speed0
 % rate0
@@ -210,7 +207,7 @@ target_range2 = [10,11,12,13];
 boat_range2 = [0, 1, 2, 3];
                 
 %----------- Calculate Speed and Rate Commands-----------------
-[debug2,target_ID2, speed2, rate2, dist_target2,err2] = vbap_test(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,dist_err_cum2,dt)
+[debug2,target_ID2, speed2, rate2, dist_target2,err2] = apriltag_vbap(sand2_tagID, sand2_dist, sand2_head,target_range2,boat_range2,dist_err_cum2,dt)
 dist_err_cum2 = err2;
 speed2;
 rate2;
@@ -229,5 +226,5 @@ end
 
 iter = iter +1;
 then = now;
-% waitfor(rate);
+
 end
